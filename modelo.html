@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plenário Aberto – Câmara Municipal de Campinas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#f7f8f9; --surface:#ffffff; --soft:#eef1f4; --ink:#14243a; --muted:#53616f; --line:#dde2e7;
+  --accent:#1a5480; --accent-soft:#e3edf5; --accent-ink:#ffffff; --focus:#1f78c1;
+  --sim:#1d7656; --nao:#c03e2a; --abs:#a8700f; --aus:#b8c0c8; --pres:#5a6a8b;
+  --ok-bg:#e0f0e8; --ok-ink:#145a41; --bad-bg:#f7e2de; --bad-ink:#8c2a1b; --neu-bg:#e9edf0; --neu-ink:#46535f; --warn-bg:#f5ebd6; --warn-ink:#6f4a0f;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0f1720; --surface:#162230; --soft:#1c2a39; --ink:#e6edf4; --muted:#a2b0bf; --line:#2a394a;
+    --accent:#8cc0e6; --accent-soft:#1d3347; --accent-ink:#0f1720; --focus:#a8d6fa;
+    --sim:#43b98e; --nao:#f07360; --abs:#e2ac44; --aus:#425062; --pres:#93a3c3;
+    --ok-bg:#173c2f; --ok-ink:#95e3c3; --bad-bg:#45221c; --bad-ink:#ffb8aa; --neu-bg:#243344; --neu-ink:#bcc8d4; --warn-bg:#3e3119; --warn-ink:#f3d18b;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0f1720; --surface:#162230; --soft:#1c2a39; --ink:#e6edf4; --muted:#a2b0bf; --line:#2a394a;
+  --accent:#8cc0e6; --accent-soft:#1d3347; --accent-ink:#0f1720; --focus:#a8d6fa;
+  --sim:#43b98e; --nao:#f07360; --abs:#e2ac44; --aus:#425062; --pres:#93a3c3;
+  --ok-bg:#173c2f; --ok-ink:#95e3c3; --bad-bg:#45221c; --bad-ink:#ffb8aa; --neu-bg:#243344; --neu-ink:#bcc8d4; --warn-bg:#3e3119; --warn-ink:#f3d18b;
+}
+html{font-size:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5rem);-webkit-text-size-adjust:100%}
+html[data-texto="1"]{font-size:112.5%}
+html[data-texto="2"]{font-size:125%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent);text-underline-offset:.18em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+button{font:inherit;color:inherit}
+img{max-width:100%}
+.wrap{max-width:66rem;margin:0 auto;padding-left:1.25rem;padding-right:1.25rem}
+.skip{position:absolute;left:1rem;top:-4rem;background:var(--accent);color:var(--accent-ink);padding:.6rem 1rem;border-radius:8px;z-index:20;text-decoration:none;font-weight:700}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + .5rem)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* topo */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar1{display:flex;align-items:center;gap:1rem;min-height:3.75rem}
+.brand{white-space:nowrap;font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.6rem;margin-right:auto}
+.brand .mark{display:grid;grid-template-columns:repeat(3,.45rem);gap:2px}
+.brand .mark i{width:.45rem;height:.45rem;border-radius:2px;background:var(--sim)}
+.brand .mark i:nth-child(5){background:var(--nao)}
+.brand .mark i:nth-child(8){background:var(--aus)}
+.tools{display:flex;gap:.4rem}
+.tool{min-width:2.75rem;height:2.75rem;padding:0 .7rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:.35rem}
+.tool svg{width:1.15rem;height:1.15rem}
+@media (max-width:480px){.brand{font-size:19px;gap:8px}.brand .mark{grid-template-columns:repeat(3,7px)}.brand .mark i{width:7px;height:7px}.tool{width:44px;min-width:44px;height:44px;padding:0;font-size:16px}.tool svg{width:18px;height:18px}nav.tabs a{font-size:16px}}
+nav.tabs{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:thin;margin:0 -.25rem;padding:0 .25rem .5rem}
+nav.tabs a{padding:.5rem .85rem;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:700;white-space:nowrap;min-height:2.75rem;display:inline-flex;align-items:center}
+nav.tabs a:hover{color:var(--ink);background:var(--soft)}
+nav.tabs a[aria-current="page"]{color:var(--accent-ink);background:var(--accent)}
+
+main.wrap{padding-top:2.25rem;padding-bottom:4rem;outline:none}
+h1,h2,h3{font-family:var(--display);line-height:1.15;letter-spacing:-.015em;margin:0;font-weight:800}
+h1{font-size:clamp(1.85rem,4.4vw,2.6rem)}
+h2{font-size:1.5rem}
+h3{font-size:1.15rem;font-weight:600}
+.lede{color:var(--muted);max-width:60ch;margin:.6rem 0 0;font-size:1.1rem}
+.note{font-size:.94rem;color:var(--muted)}
+.back{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:1rem;font-weight:700;text-decoration:none;min-height:2.75rem}
+.section{margin-top:3rem}
+.section > h2{margin-bottom:1rem}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:1.4rem;color:var(--muted)}
+
+/* início */
+.hero{padding:1.5rem 0 .5rem}
+.hero h1{font-size:clamp(2.1rem,6vw,3.6rem);max-width:21ch;letter-spacing:-.025em}
+.hero p{font-size:1.2rem;color:var(--muted);max-width:46ch;margin:1rem 0 0}
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.9rem;margin-top:2.25rem}
+.path{display:flex;flex-direction:column;gap:.4rem;padding:1.4rem 1.4rem 1.3rem;border-radius:18px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);min-height:9.5rem;transition:border-color .15s}
+.path:hover{border-color:var(--accent)}
+.path .ico{width:2.6rem;height:2.6rem;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:.4rem}
+.path .ico svg{width:1.4rem;height:1.4rem}
+.path strong{font-family:var(--display);font-size:1.45rem;font-weight:800;letter-spacing:-.01em}
+.path span{color:var(--muted)}
+@media (max-width:560px){.paths{gap:.6rem;margin-top:1.6rem}.path{display:grid;grid-template-columns:auto 1fr;column-gap:1rem;row-gap:.1rem;min-height:0;padding:1rem 1.1rem}.path .ico{grid-row:1 / span 2;margin:0;align-self:center}.path strong{font-size:1.25rem}.path span:not(.ico){font-size:.95rem}}
+.cal abbr{text-decoration:none}
+.faces{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.25rem,1fr));gap:.4rem}
+.face{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.45rem;padding:.85rem .4rem;border-radius:var(--r);text-decoration:none;color:var(--ink)}
+.face:hover{background:var(--surface)}
+.face .nm{font-weight:700;font-size:.95rem;line-height:1.25}
+.face .pt{font-size:.82rem;color:var(--muted);margin-top:-.3rem}
+.latest{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.3rem 1.4rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.9rem;padding:.6rem 1.15rem;border-radius:10px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:var(--surface);color:var(--accent);border:1px solid var(--line)}
+
+/* avatar */
+.av{width:3rem;height:3rem;border-radius:50%;flex:none;display:grid;place-items:center;overflow:hidden;background:var(--soft);color:var(--accent);font-family:var(--display);font-weight:800;font-size:1rem;border:1px solid var(--line)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.av.lg{width:4.75rem;height:4.75rem;font-size:1.4rem}
+.av.xl{width:6.5rem;height:6.5rem;font-size:2rem}
+.av.sm{width:2rem;height:2rem;font-size:.75rem}
+
+/* calendário de sessões */
+.sessions{display:grid;grid-template-columns:minmax(17rem,22rem) 1fr;gap:1.5rem;align-items:start;margin-top:1.75rem}
+@media (max-width:760px){.sessions{grid-template-columns:1fr}}
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1rem}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.cal-head h2{font-size:1.15rem;font-weight:600;text-transform:none}
+.cal-nav{width:2.75rem;height:2.75rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:1.2rem;display:grid;place-items:center}
+.cal-nav:disabled{opacity:.35;cursor:default}
+.cal table{width:100%;border-collapse:collapse;table-layout:fixed}
+.cal th{font-size:.78rem;color:var(--muted);font-weight:700;padding:.3rem 0;text-align:center}
+.cal td{padding:2px;text-align:center}
+.day{width:100%;aspect-ratio:1;max-height:2.9rem;border-radius:10px;border:0;background:none;color:var(--muted);font-size:.95rem;display:grid;place-items:center;position:relative}
+button.day{cursor:pointer;color:var(--ink);font-weight:700;background:var(--accent-soft)}
+button.day:hover{outline:2px solid var(--accent)}
+button.day.fut{background:none;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:400}
+button.day[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.day.today::after{content:"";position:absolute;bottom:.25rem;width:.3rem;height:.3rem;border-radius:50%;background:currentColor}
+.cal-legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.82rem;color:var(--muted);margin-top:.6rem}
+.cal-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.cal-legend i{width:.9rem;height:.9rem;border-radius:4px;background:var(--accent-soft);display:inline-block}
+.cal-legend i.f{background:none;box-shadow:inset 0 0 0 1.5px var(--line)}
+.slist{display:grid;gap:.6rem}
+.sitem{display:grid;grid-template-columns:auto 1fr auto;gap:.2rem 1rem;align-items:center;padding:1rem 1.15rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;color:var(--ink)}
+.sitem:hover{border-color:var(--accent)}
+.sitem .dt{font-family:var(--display);text-align:center;line-height:1;min-width:2.8rem}
+.sitem .dt b{display:block;font-size:1.6rem;font-weight:800}
+.sitem .dt small{font-size:.78rem;color:var(--muted)}
+.sitem .info strong{display:block}
+.sitem .info span{font-size:.92rem;color:var(--muted)}
+.sitem .go{color:var(--muted)}
+.sitem.fut{background:transparent;border-style:dashed}
+
+/* página da sessão */
+.shead{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:flex-end}
+.snav{display:flex;gap:.5rem}
+.facts{display:flex;flex-wrap:wrap;gap:.6rem 2rem;margin:1.5rem 0 0;padding:1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fact{display:flex;flex-direction:column}
+.fact b{font-family:var(--display);font-size:1.7rem;font-weight:800;line-height:1.1}
+.fact span{font-size:.9rem;color:var(--muted)}
+.docs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+
+/* votos */
+.v{display:inline-block;width:.9rem;height:.9rem;border-radius:3px;flex:none;position:relative}
+.v.S{background:var(--sim)}
+.v.N{background:var(--nao)}
+.v.N::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,var(--surface) 40%,var(--surface) 60%,transparent 60%);border-radius:3px}
+.v.A{background:linear-gradient(90deg,var(--abs) 50%,transparent 50%);box-shadow:inset 0 0 0 2px var(--abs)}
+.v.F{background:transparent;box-shadow:inset 0 0 0 2px var(--aus)}
+.v.P{background:var(--pres);border-radius:50%}
+.strip{display:flex;flex-wrap:wrap;gap:3px;margin-top:.6rem}
+.strip .v{width:.7rem;height:.7rem;border-radius:2px}
+.strip .v.me{outline:2px solid var(--ink);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-size:.88rem;color:var(--muted);margin:.25rem 0 1rem}
+.legend span{display:inline-flex;align-items:center;gap:.4rem}
+.vote{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin:0 0 .6rem}
+.vote > button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;width:100%;padding:1rem 1.15rem;cursor:pointer;border-radius:var(--r)}
+.vote > button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.vote .t{font-weight:700}
+.vote .meta{color:var(--muted);font-size:.92rem;grid-column:1}
+.vote .right{grid-row:1 / span 2;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;gap:.25rem}
+.vote .strip{grid-column:1 / -1}
+.vote .chev{transition:transform .15s;color:var(--muted)}
+.vote > button[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.badge{display:inline-block;font-size:.8rem;font-weight:700;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+.b1,.b8{background:var(--ok-bg);color:var(--ok-ink)}
+.b2,.b9{background:var(--bad-bg);color:var(--bad-ink)}
+.b3{background:var(--neu-bg);color:var(--neu-ink)}
+.b4,.b7{background:var(--warn-bg);color:var(--warn-ink)}
+.score{font-size:.82rem;color:var(--muted);white-space:nowrap}
+.detail{border-top:1px solid var(--line);padding:1rem 1.15rem 1.15rem}
+.detail p{margin:0 0 .7rem;max-width:70ch}
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem;margin-top:.8rem}
+.group h4{margin:0 0 .5rem;font-size:.95rem;display:flex;align-items:center;gap:.5rem}
+.group ul{margin:0;padding:0;list-style:none;display:grid;gap:.35rem}
+.group li a{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink)}
+.group li a:hover span{text-decoration:underline}
+.group li .note{margin-left:auto}
+.links{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font-size:.95rem;margin-top:.9rem}
+details.cat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:.6rem}
+details.cat > summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.15rem;font-weight:700;min-height:3.25rem;border-radius:var(--r)}
+details.cat > summary::-webkit-details-marker{display:none}
+details.cat > summary .cnt{font-weight:400;color:var(--muted);font-size:.92rem}
+details.cat > summary .chev{transition:transform .15s;color:var(--muted)}
+details.cat[open] > summary .chev{transform:rotate(180deg)}
+details.cat .inner{padding:0 .6rem .6rem}
+details.cat .vote{border-color:var(--line);background:var(--bg)}
+
+/* presença */
+.seg{display:inline-flex;background:var(--soft);border-radius:12px;padding:.25rem;gap:.25rem}
+.seg button{border:0;background:none;padding:.5rem 1rem;border-radius:9px;cursor:pointer;font-weight:700;color:var(--muted);min-height:2.5rem}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.toolbar{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;align-items:center;margin:1.5rem 0 1rem}
+label.f{display:inline-flex;align-items:center;gap:.5rem;font-size:.95rem}
+select,input[type=search]{font:inherit;padding:.6rem .75rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);min-height:2.75rem}
+input[type=search]{width:100%}
+.prow{display:grid;grid-template-columns:auto minmax(9rem,1fr) minmax(8rem,16rem) 6.5rem;gap:.4rem 1rem;align-items:center;padding:.7rem 1rem;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.prow:hover{background:var(--soft)}
+.plist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.plist .prow:last-child{border-bottom:0}
+.prow .who strong{display:block;line-height:1.25}
+.prow .who span{font-size:.85rem;color:var(--muted)}
+.meter{height:.6rem;border-radius:99px;background:var(--soft);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.prow .num{text-align:right;font-size:.92rem}
+.prow .num b{font-size:1.05rem}
+@media (max-width:560px){
+  .prow{grid-template-columns:auto 1fr auto}
+  .prow .meter{grid-column:2 / -1;grid-row:2}
+}
+.callout{background:var(--accent-soft);border-radius:var(--r);padding:1rem 1.15rem;margin:1rem 0;max-width:70ch}
+.callout p{margin:0}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(12.5rem,1fr));gap:.35rem}
+.person{display:flex;align-items:center;gap:.6rem;padding:.45rem .5rem;border-radius:10px;text-decoration:none;color:var(--ink)}
+.person:hover{background:var(--surface)}
+.person span small{display:block;color:var(--muted);font-size:.8rem}
+
+/* vereador */
+.phead{display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center;margin:.25rem 0 1.75rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.8rem}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.1rem}
+.stat h3{font-size:1rem;margin-bottom:.4rem}
+.big{font-family:var(--display);font-weight:800;font-size:2.2rem;line-height:1}
+.hbar{display:flex;height:.7rem;border-radius:99px;overflow:hidden;background:var(--soft);margin:.7rem 0 .4rem}
+.hbar i{display:block;height:100%}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+table.t{border-collapse:collapse;width:100%}
+table.t th,table.t td{text-align:left;padding:.7rem 1rem;border-bottom:1px solid var(--line);vertical-align:top}
+table.t th{font-size:.85rem;color:var(--muted)}
+table.t tr:last-child td{border-bottom:0}
+.check{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;min-height:2.75rem}
+.check input{width:1.2rem;height:1.2rem;accent-color:var(--accent)}
+
+/* comissões */
+.com{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.15rem;margin-bottom:.7rem}
+.com h3{font-size:1.05rem}
+.com .sig{color:var(--muted);font-size:.88rem}
+.com .people{margin-top:.7rem}
+
+.prose{max-width:68ch}
+.prose h2{margin:2.2rem 0 .6rem}
+.prose p{margin:0 0 .8rem}
+footer{border-top:1px solid var(--line);padding:1.5rem 0 2.5rem;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+
+/* v3: barra de votos */
+.vbar{grid-column:1 / -1;margin-top:.55rem;max-width:34rem}
+.vbar .track{display:flex;height:.5rem;border-radius:99px;overflow:hidden;background:var(--soft);gap:2px}
+.vbar .track i{display:block;height:100%}
+.vbar .vtxt{font-size:.85rem;color:var(--muted);margin-top:.3rem}
+.vbar.big{max-width:none;margin:.2rem 0 1rem}
+.vbar.big .track{height:.85rem}
+.vbar.big .vtxt{font-size:.95rem;color:var(--ink)}
+.voto-tag{display:inline-flex;align-items:center;gap:.35rem;font-weight:700}
+.voto-tag::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--c)}
+
+/* filtros */
+.filters{display:grid;gap:.8rem;margin:1.25rem 0 1rem}
+.frow{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center}
+.flabel{font-size:.88rem;color:var(--muted);font-weight:700;min-width:5.5rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{border:1px solid var(--line);background:var(--surface);padding:.35rem .85rem;border-radius:999px;cursor:pointer;font-size:.92rem;min-height:2.4rem}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.dates{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.dates label{display:inline-flex;align-items:center;gap:.4rem;font-size:.92rem}
+input[type=date]{font:inherit;padding:.45rem .6rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);min-height:2.6rem}
+.count{font-size:.92rem;color:var(--muted);margin:.5rem 0 .8rem}
+.more{display:block;margin:1.2rem auto 0}
+.segnav{display:inline-flex;background:var(--soft);border-radius:12px;padding:.25rem;gap:.25rem;margin-top:1.25rem}
+.segnav a{padding:.5rem 1rem;border-radius:9px;text-decoration:none;font-weight:700;color:var(--muted);min-height:2.6rem;display:inline-flex;align-items:center}
+.segnav a[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.ftoggle{display:none}
+@media (max-width:640px){
+  .ftoggle{display:inline-flex}
+  .filters.closed{display:none}
+}
+
+/* início com calendário */
+.homecal{display:grid;grid-template-columns:minmax(17rem,22rem) 1fr;gap:1.25rem;margin-top:2.25rem;align-items:start}
+@media (max-width:760px){.homecal{grid-template-columns:1fr}}
+.homecal .side{display:grid;gap:.8rem}
+.daypick{margin-top:.6rem;display:grid;gap:.5rem}
+.paths.two{grid-template-columns:1fr 1fr;margin-top:0}
+@media (max-width:560px){.paths.two{grid-template-columns:1fr}}
+.paths.two .path{min-height:0}
+.latest.col{flex-direction:column;align-items:flex-start}
+.linkrow{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem}
+
+/* sessão: calendário recolhível */
+.calbox{margin-top:1rem;max-width:22rem}
+
+/* comissões */
+.comcard{display:block;text-decoration:none;color:var(--ink)}
+.comcard:hover{border-color:var(--accent)}
+.avs{display:flex;margin-top:.7rem}
+.avs .av{margin-right:-.45rem;border:2px solid var(--surface)}
+details.cat.reu > summary{display:grid;grid-template-columns:auto 1fr auto;gap:.2rem 1rem;align-items:center;justify-content:normal}
+.reu .rdate{font-family:var(--display);text-align:center;min-width:2.8rem;line-height:1}
+.reu .rdate b{display:block;font-size:1.4rem;font-weight:800}
+.reu .rdate small{font-size:.75rem;color:var(--muted)}
+.reu .rinfo strong{display:block;font-weight:700}
+.reu .rinfo span{font-weight:400;font-size:.9rem;color:var(--muted)}
+.reu .inner{padding:0 1.15rem 1.1rem}
+.mlist{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.5rem}
+.mlist li{background:var(--bg);border-radius:10px;padding:.65rem .8rem}
+.mlist li strong{display:block;font-size:.95rem}
+.mlist li span{font-size:.9rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<a class="skip" href="#app">Pular para o conteúdo</a>
+<header class="top">
+  <div class="wrap">
+    <div class="bar1">
+      <a class="brand" href="#inicio"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Plenário Aberto</a>
+      <div class="tools">
+        <button class="tool" id="btnTexto" type="button" aria-label="Aumentar o tamanho do texto">A<span aria-hidden="true" style="font-size:.8em">+</span></button>
+        <button class="tool" id="btnTema" type="button" aria-label="Alternar tema claro ou escuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Seções">
+      <a href="#inicio" data-view="inicio">Início</a>
+      <a href="#votacoes" data-view="votacoes">Votações</a>
+      <a href="#presenca" data-view="presenca">Presença</a>
+      <a href="#comissoes" data-view="comissoes">Comissões</a>
+      <a href="#vereadores" data-view="vereadores">Vereadores</a>
+      <a href="#sobre" data-view="sobre">Sobre os dados</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="app" tabindex="-1"></main>
+<footer><div class="wrap">Protótipo independente feito com dados públicos do SAPL da Câmara Municipal de Campinas, atualizados automaticamente todos os dias. Última atualização: <span id="gerado"></span>. Não é um canal oficial da Câmara.</div></footer>
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function(){
+const D = JSON.parse(document.getElementById('data').textContent);
+const SAPL = 'https://sapl.campinas.sp.leg.br';
+const HOJE = D.hoje;
+const app = document.getElementById('app');
+const V = {}; D.V.forEach(v => V[v.id] = v);
+const ATIVOS = D.V.filter(v => v.ativo).sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
+const FOTOS = D.FOTOS || {};
+const TIPOS = D.TIPOS || {};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dt = d => new Date(d + 'T12:00:00');
+const fmtData = d => dt(d).toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'});
+const fmtCurta = d => dt(d).toLocaleDateString('pt-BR', {day:'numeric', month:'short'}).replace('.','');
+const diaSemana = d => dt(d).toLocaleDateString('pt-BR', {weekday:'long'});
+const num = n => n.toLocaleString('pt-BR');
+const pct = (a,b) => b ? Math.round(100*a/b) : null;
+const norm = s => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const iniciais = n => n.replace(/^(Dr|Dra|Prof|Professor|Professora)\.?\s+/i,'').split(/\s+/).filter(Boolean).slice(0,2).map(p=>p[0]).join('').toUpperCase();
+const isoMenos = dias => { const x = dt(HOJE); x.setDate(x.getDate() - dias); return x.toISOString().slice(0,10); };
+const VOTO = {S:'Sim', N:'Não', A:'Abstenção', F:'Ausente ou não votou', P:'Presidência (não vota)'};
+const VCOR = {S:'sim', N:'nao', A:'abs', F:'aus', P:'pres'};
+const VOTO_ORDEM = ['S','N','A','F','P'];
+const CAT = {proj:'Projetos e emendas', req:'Requerimentos', moc:'Moções', ata:'Atas e outros'};
+const RESG = {aprov:[1,7,8], nao:[2,4,9], nv:[3]};
+const CHEV = '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+document.getElementById('gerado').textContent = fmtData(D.gerado.slice(0,10));
+
+/* preferências */
+const root = document.documentElement;
+const pref = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e) { return null; } };
+let texto = +(pref('pa-texto') || 0); root.dataset.texto = texto;
+const tema = pref('pa-tema'); if (tema) root.dataset.theme = tema;
+const btnTexto = document.getElementById('btnTexto');
+const rotTexto = () => btnTexto.setAttribute('aria-label', texto < 2 ? 'Aumentar o tamanho do texto' : 'Voltar o texto ao tamanho normal');
+rotTexto();
+btnTexto.addEventListener('click', () => { texto = (texto + 1) % 3; root.dataset.texto = texto; pref('pa-texto', texto); rotTexto(); });
+document.getElementById('btnTema').addEventListener('click', () => {
+  const atual = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const novo = atual === 'dark' ? 'light' : 'dark'; root.dataset.theme = novo; pref('pa-tema', novo);
+});
+
+/* dados derivados */
+const VT = D.VT.map(r => ({id:r[0], m:r[1], s:r[2], fase:r[3], res:r[4], sim:r[5], nao:r[6], abs:r[7], lbl:r[8], cat:r[9], turno:r[10]}));
+const VTid = {}; VT.forEach(v => VTid[v.id] = v);
+const NOM = {};
+for (const [vid, str] of Object.entries(D.NOM)) { const m = {}; str.split(',').forEach(t => { if (t) m[+t.slice(0,-1)] = t.slice(-1); }); NOM[vid] = m; }
+const PRES = {}; for (const [sid, str] of Object.entries(D.PRES || {})) PRES[sid] = new Set(str.split(',').map(Number));
+const SESS = Object.entries(D.S).map(([id, s]) => ({id:+id, n:s[0], d:s[1], t:s[2], ata:s[3], pauta:s[4]})).sort((a,b) => a.d.localeCompare(b.d) || a.id - b.id);
+const Sid = {}; SESS.forEach(s => Sid[s.id] = s);
+const votosSessao = {}; VT.forEach(v => (votosSessao[v.s] = votosSessao[v.s] || []).push(v));
+VT.forEach(v => v.d = Sid[v.s].d);
+const sessNome = s => s.t.startsWith('Sessão') ? `${s.n}ª ${s.t}` : `${s.n}ª Sessão ${s.t}`;
+const tipoCurto = s => s.t.startsWith('Sessão') ? s.t : 'Sessão ' + s.t.toLowerCase();
+const comDados = SESS.filter(s => s.d <= HOJE && (votosSessao[s.id] || PRES[s.id]));
+const ultima = [...comDados].reverse().find(s => votosSessao[s.id]);
+const contagem = m => { const c = {S:0,N:0,A:0,F:0,P:0}; Object.values(m).forEach(x => c[x]++); return c; };
+const porNome = ids => ids.sort((a,b) => (V[a]?.nome||'').localeCompare(V[b]?.nome||'', 'pt-BR'));
+const nomeV = id => V[id] ? V[id].nome : 'Parlamentar ' + id;
+const resNome = r => D.res[r] || '—';
+const matRot = id => { const m = D.MAT[id]; if (!m) return 'Matéria ' + id; return `${TIPOS[m[0]] || m[0] || 'Matéria'} nº ${m[1]} de ${m[2]}`; };
+const DATA_MIN = SESS[0].d;
+
+function av(id, cls=''){
+  const n = V[id] ? V[id].nome : '?';
+  return FOTOS[id] ? `<span class="av ${cls}"><img src="${FOTOS[id]}" alt=""></span>` : `<span class="av ${cls}" aria-hidden="true">${esc(iniciais(n))}</span>`;
+}
+const person = (id, sub='') => `<a class="person" href="#v-${id}">${av(id,'sm')}<span>${esc(nomeV(id))}${sub ? `<small>${sub}</small>` : ''}</span></a>`;
+
+/* ---------- barra de votos ---------- */
+function barra(m, big=false){
+  const c = contagem(m); const tot = c.S + c.N + c.A + c.F; if (!tot) return '';
+  const seg = ['S','N','A','F'].filter(k => c[k]).map(k => `<i style="width:${100*c[k]/tot}%;background:var(--${VCOR[k]})"></i>`).join('');
+  const txt = [`${c.S} sim`, `${c.N} não`, c.A ? `${c.A} ${c.A>1?'abstenções':'abstenção'}` : '', c.F ? `${c.F} ${c.F>1?'ausentes':'ausente'}` : ''].filter(Boolean).join(', ');
+  return `<div class="vbar${big?' big':''}"><div class="track" role="img" aria-label="Votos: ${txt}">${seg}</div><div class="vtxt" aria-hidden="true">${txt}</div></div>`;
+}
+const legenda = () => `<div class="legend" aria-hidden="true">${['S','N','A','F'].map(k => `<span class="voto-tag" style="--c:var(--${VCOR[k]});font-weight:400">${VOTO[k]}</span>`).join('')}</div>`;
+
+function detalhe(v){
+  const mat = D.MAT[v.m]; const m = NOM[v.id];
+  let h = '<div class="detail">';
+  if (mat) { h += `<p>${esc(mat[3] || 'Sem ementa cadastrada.')}</p>`; if (mat[4] && mat[4].length) h += `<p class="note">Autoria: ${esc(mat[4].join(', '))}</p>`; }
+  else if (!m) h += `<p class="note">Votação simbólica, sem registro do voto de cada vereador. A ementa e os documentos estão na página da matéria.</p>`;
+  if (m) {
+    h += barra(m, true);
+    const g = {}; Object.entries(m).forEach(([id,x]) => (g[x] = g[x] || []).push(+id));
+    h += `<div class="groups">${VOTO_ORDEM.filter(k => g[k]).map(k => `<div class="group"><h4><span class="voto-tag" style="--c:var(--${VCOR[k]})">${VOTO[k]} (${g[k].length})</span></h4><ul>${porNome(g[k]).map(id => `<li><a href="#v-${id}">${av(id,'sm')}<span>${esc(nomeV(id))}</span>${V[id] && V[id].partido ? `<small class="note">${esc(V[id].partido)}</small>` : ''}</a></li>`).join('')}</ul></div>`).join('')}</div>`;
+  }
+  h += `<div class="links"><a href="${SAPL}/materia/${v.m}" target="_blank" rel="noopener">Ver a matéria no site da Câmara</a>`;
+  if (mat && mat[5]) h += `<a href="${esc(mat[5])}" target="_blank" rel="noopener">Texto original (PDF)</a>`;
+  if (!location.hash.startsWith('#s-')) h += `<a href="#s-${v.s}">Ver a sessão de ${fmtCurta(v.d)}</a>`;
+  return h + '</div></div>';
+}
+function voteItem(v, meta='', me=null){
+  const m = NOM[v.id];
+  const ementa = D.MAT[v.m] ? (D.MAT[v.m][3]||'') : '';
+  const sub = meta || (ementa ? esc(ementa.slice(0,150)) + (ementa.length > 150 ? '…' : '') : (m ? '' : 'Votação simbólica'));
+  return `<article class="vote" data-id="${v.id}"><button type="button" aria-expanded="false">
+    <span class="t">${esc(v.lbl || 'Matéria ' + v.m)}</span>
+    <span class="right"><span class="badge b${v.res}">${esc(resNome(v.res))}</span>${CHEV}</span>
+    <span class="meta">${sub}</span>
+    ${m ? barra(m) : ''}
+  </button></article>`;
+}
+app.addEventListener('click', e => {
+  const btn = e.target.closest('.vote > button'); if (!btn) return;
+  const art = btn.parentElement; const open = btn.getAttribute('aria-expanded') === 'true';
+  if (open) { art.querySelector('.detail')?.remove(); btn.setAttribute('aria-expanded','false'); }
+  else { art.insertAdjacentHTML('beforeend', detalhe(VTid[art.dataset.id])); btn.setAttribute('aria-expanded','true'); }
+});
+
+/* ---------- componentes de filtro ---------- */
+function chips(nome, opcoes, atual){
+  return `<div class="chips" role="group" aria-label="${esc(nome)}">${opcoes.map(([k,n]) => `<button type="button" class="chip" data-k="${k}" aria-pressed="${atual===k}">${esc(n)}</button>`).join('')}</div>`;
+}
+function ligarChips(sel, fn){
+  app.querySelectorAll(sel + ' .chip').forEach(b => b.addEventListener('click', () => {
+    b.parentElement.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b)); fn(b.dataset.k);
+  }));
+}
+const ANO = HOJE.slice(0,4);
+const ANOS = [...new Set(SESS.filter(s => s.d <= HOJE).map(s => s.d.slice(0,4)))].sort().reverse();
+const PERIODO_TXT = 'desde ' + fmtData(DATA_MIN);
+const PERIODOS = [['30','Últimos 30 dias'],['90','Últimos 3 meses'], ...ANOS.map(a => [a,a]), ['tudo','Tudo']];
+function periodo(k){
+  if (k === '30') return [isoMenos(30), HOJE];
+  if (k === '90') return [isoMenos(90), HOJE];
+  if (/^\d{4}$/.test(k)) return [k + '-01-01', k === ANO ? HOJE : k + '-12-31'];
+  return [DATA_MIN, HOJE];
+}
+function blocoPeriodo(id, st){
+  return `<div class="frow" id="${id}"><span class="flabel">Período</span>${chips('Período', PERIODOS, st.p)}
+    <span class="dates"><label>de <input type="date" data-d="de" min="${DATA_MIN}" max="${HOJE}" value="${st.de}"></label><label>até <input type="date" data-d="ate" min="${DATA_MIN}" max="${HOJE}" value="${st.ate}"></label></span></div>`;
+}
+function ligarPeriodo(id, st, fn){
+  ligarChips('#' + id, k => { st.p = k; [st.de, st.ate] = periodo(k); app.querySelector(`#${id} [data-d=de]`).value = st.de; app.querySelector(`#${id} [data-d=ate]`).value = st.ate; fn(); });
+  app.querySelectorAll(`#${id} input[type=date]`).forEach(inp => inp.addEventListener('change', () => {
+    if (!inp.value) return; st[inp.dataset.d] = inp.value; st.p = ''; app.querySelectorAll(`#${id} .chip`).forEach(x => x.setAttribute('aria-pressed','false'));
+    if (st.de > st.ate) { const t = st.de; st.de = st.ate; st.ate = t; }
+    fn();
+  }));
+}
+const btnFiltros = alvo => `<button type="button" class="btn ghost ftoggle" aria-expanded="false" aria-controls="${alvo}" data-ft="${alvo}">Filtros</button>`;
+function ligarToggle(){
+  app.querySelectorAll('[data-ft]').forEach(b => b.addEventListener('click', () => {
+    const f = document.getElementById(b.dataset.ft); const ab = f.classList.toggle('closed') === false; b.setAttribute('aria-expanded', ab);
+  }));
+}
+
+/* ---------- calendário reutilizável ---------- */
+const MESES = [...new Set(SESS.map(s => s.d.slice(0,7)))].sort();
+const calState = {mes: ultima ? ultima.d.slice(0,7) : MESES[MESES.length-1], dia: null};
+function calendario(el, opts){
+  const st = calState;
+  const draw = () => {
+    const [y, m] = st.mes.split('-').map(Number);
+    const primeiro = new Date(y, m-1, 1); const dias = new Date(y, m, 0).getDate(); const inicio = primeiro.getDay();
+    const doMes = SESS.filter(s => s.d.startsWith(st.mes));
+    const porDia = {}; doMes.forEach(s => (porDia[+s.d.slice(8)] = porDia[+s.d.slice(8)] || []).push(s));
+    const idx = MESES.indexOf(st.mes);
+    const nomeMes = primeiro.toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
+    let h = `<div class="cal-head"><button class="cal-nav" data-nav="-1" type="button" aria-label="Mês anterior" ${idx<=0?'disabled':''}>‹</button><h2 aria-live="polite">${nomeMes.charAt(0).toUpperCase()+nomeMes.slice(1)}</h2><button class="cal-nav" data-nav="1" type="button" aria-label="Próximo mês" ${idx>=MESES.length-1?'disabled':''}>›</button></div>
+    <table aria-label="Calendário de sessões de ${nomeMes}"><thead><tr>${['dom','seg','ter','qua','qui','sex','sáb'].map((d,i) => `<th scope="col"><abbr title="${['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'][i]}">${d}</abbr></th>`).join('')}</tr></thead><tbody><tr>`;
+    for (let i = 0; i < inicio; i++) h += '<td></td>';
+    for (let d = 1; d <= dias; d++) {
+      const iso = `${st.mes}-${String(d).padStart(2,'0')}`; const ss = porDia[d]; const hoje = iso === HOJE ? ' today' : '';
+      if (ss) { const fut = iso > HOJE;
+        const lab = `${d} de ${nomeMes}: ${ss.map(s => tipoCurto(s).toLowerCase()).join(' e ')}${fut ? ', agendada' : ''}`;
+        h += `<td><button type="button" class="day${fut?' fut':''}${hoje}" data-dia="${d}" aria-pressed="${st.dia===d}" aria-label="${esc(lab)}">${d}</button></td>`;
+      } else h += `<td><span class="day${hoje}">${d}</span></td>`;
+      if ((inicio + d) % 7 === 0 && d < dias) h += '</tr><tr>';
+    }
+    h += `</tr></tbody></table><div class="cal-legend"><span><i></i>Sessão realizada</span><span><i class="f"></i>Agendada</span></div>`;
+    if (opts.picker) h += `<div class="daypick" id="daypick"></div>`;
+    el.innerHTML = h;
+    el.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => { st.mes = MESES[idx + +b.dataset.nav]; st.dia = null; draw(); el.querySelector(`[data-nav="${b.dataset.nav}"]`)?.focus(); }));
+    el.querySelectorAll('button.day').forEach(b => b.addEventListener('click', () => {
+      const d = +b.dataset.dia; const ss = porDia[d];
+      if (ss.length === 1 && ss[0].d <= HOJE) { location.hash = 's-' + ss[0].id; return; }
+      st.dia = st.dia === d ? null : d; draw();
+    }));
+    if (opts.picker && st.dia && porDia[st.dia]) el.querySelector('#daypick').innerHTML = porDia[st.dia].map(itemSessao).join('');
+    if (opts.lista) opts.lista(st.dia ? porDia[st.dia] || [] : doMes, !!st.dia, () => { st.dia = null; draw(); });
+  };
+  draw();
+}
+function itemSessao(s){
+  const vs = votosSessao[s.id] || []; const fut = s.d > HOJE; const nom = vs.filter(v => NOM[v.id]).length;
+  const info = fut ? 'Agendada' : vs.length ? `${num(vs.length)} votações${nom ? `, ${nom} com voto de cada vereador` : ''}` : (s.t === 'Solene' ? 'Sessão solene, sem votações' : 'Sem votações registradas');
+  const inner = `<span class="dt"><b>${dt(s.d).getDate()}</b><small>${dt(s.d).toLocaleDateString('pt-BR',{month:'short'}).replace('.','')}</small></span><span class="info"><strong>${esc(sessNome(s))}</strong><span>${diaSemana(s.d)}. ${info}</span></span>`;
+  return fut ? `<div class="sitem fut">${inner}</div>` : `<a class="sitem" href="#s-${s.id}">${inner}<span class="go" aria-hidden="true">›</span></a>`;
+}
+
+/* ---------- Início ---------- */
+const ICO = {
+  pre:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 11l2 2 4-4"/></svg>',
+  com:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"/><circle cx="5" cy="14" r="2.5"/><circle cx="19" cy="14" r="2.5"/><path d="M8 21a4 4 0 0 1 8 0M1.5 21a3.5 3.5 0 0 1 6 0M16.5 21a3.5 3.5 0 0 1 6 0"/></svg>'
+};
+function viewInicio(){
+  const u = ultima; const uv = u ? votosSessao[u.id] : [];
+  const apr = uv.filter(v => RESG.aprov.includes(v.res)).length;
+  app.innerHTML = `<section class="hero"><h1>Acompanhe a Câmara de Campinas com facilidade.</h1>
+    <p>Veja o que foi votado em cada sessão, quem esteve presente e quem faz parte de cada comissão.</p></section>
+  <section class="homecal" aria-labelledby="h-cal">
+    <div class="cal" id="cal"><h2 class="sr" id="h-cal">Escolha uma sessão no calendário</h2></div>
+    <div class="side">
+      ${u ? `<div class="latest col"><div><div class="note">Última sessão com votações</div><strong style="font-size:1.2rem">${esc(tipoCurto(u))} de ${fmtData(u.d)}</strong><div class="note">${num(uv.length)} votações, ${num(apr)} aprovadas${PRES[u.id] ? `, ${PRES[u.id].size} vereadores presentes` : ''}</div></div>
+        <div class="linkrow"><a class="btn" href="#s-${u.id}">Ver a última sessão</a><a class="btn ghost" href="#busca">Buscar votações por período</a></div></div>` : ''}
+      <nav class="paths two" aria-label="Outras seções">
+        <a class="path" href="#presenca"><span class="ico">${ICO.pre}</span><strong>Presença</strong><span>Quem compareceu às sessões.</span></a>
+        <a class="path" href="#comissoes"><span class="ico">${ICO.com}</span><strong>Comissões</strong><span>Quem analisa os projetos e as reuniões.</span></a>
+      </nav>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="h-ver"><h2 id="h-ver">Escolha um vereador</h2>
+    <div class="faces">${ATIVOS.map(v => `<a class="face" href="#v-${v.id}">${av(v.id,'lg')}<span class="nm">${esc(v.nome)}</span><span class="pt">${esc(v.partido||'')}</span></a>`).join('')}</div></section>`;
+  const cal = document.getElementById('cal'); calendario(cal, {picker:true});
+  cal.insertAdjacentHTML('afterbegin', '<h2 class="sr" id="h-cal">Escolha uma sessão no calendário</h2>');
+}
+
+/* ---------- Votações: por sessão ---------- */
+const segVot = atual => `<nav class="segnav" aria-label="Modo de ver as votações"><a href="#votacoes" ${atual==='s'?'aria-current="page"':''}>Por sessão</a><a href="#busca" ${atual==='b'?'aria-current="page"':''}>Todas as votações</a></nav>`;
+function viewVotacoes(){
+  app.innerHTML = `<h1>Sessões e votações</h1>
+  <p class="lede">Escolha um dia no calendário para ver o que foi votado e quem estava presente.</p>
+  ${segVot('s')}
+  <div class="sessions"><div class="cal" id="cal"></div><div><h2 class="sr">Sessões</h2><div class="slist" id="slist" aria-live="polite"></div></div></div>`;
+  calendario(document.getElementById('cal'), {lista: (L, filtrado, limpar) => {
+    const el = document.getElementById('slist');
+    el.innerHTML = (filtrado ? `<button class="btn ghost" id="todas" type="button">Mostrar todas as sessões do mês</button>` : '') + L.slice().sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id).map(itemSessao).join('');
+    el.querySelector('#todas')?.addEventListener('click', limpar);
+  }});
+}
+
+/* ---------- Votações: busca com período ---------- */
+const FB = {p:'90', de:periodo('90')[0], ate:HOJE, cat:'proj', res:'todos', nominal:false, q:'', ordem:'rec', limite:40};
+function viewBusca(){
+  app.innerHTML = `<h1>Todas as votações</h1>
+  <p class="lede">Filtre por período, tipo de proposta e resultado.</p>
+  ${segVot('b')}
+  <div class="frow" style="margin-top:1rem"><label style="flex:1 1 20rem"><span class="sr">Buscar</span><input id="bq" type="search" placeholder="Buscar por número, tipo ou palavra da ementa" value="${esc(FB.q)}"></label>${btnFiltros('bf')}</div>
+  <div class="filters closed" id="bf">
+    ${blocoPeriodo('bper', FB)}
+    <div class="frow" id="bcat"><span class="flabel">Tipo</span>${chips('Tipo de proposta', [['proj','Projetos e emendas'],['req','Requerimentos'],['moc','Moções'],['ata','Atas e outros'],['todos','Todos']], FB.cat)}</div>
+    <div class="frow" id="bres"><span class="flabel">Resultado</span>${chips('Resultado', [['todos','Todos'],['aprov','Aprovados'],['nao','Não aprovados'],['nv','Não votados']], FB.res)}</div>
+    <div class="frow"><span class="flabel">Mostrar</span><label class="check"><input type="checkbox" id="bnom" ${FB.nominal?'checked':''}>Só com voto de cada vereador</label>
+      <label class="f">Ordenar <select id="bord"><option value="rec">Mais recentes</option><option value="ant">Mais antigas</option><option value="div">Mais votos contrários</option></select></label></div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p><div id="lista"></div>`;
+  if (matchMedia('(min-width:641px)').matches) document.getElementById('bf').classList.remove('closed');
+  ligarToggle();
+  const upd = () => { FB.limite = 40; renderBusca(); };
+  document.getElementById('bord').value = FB.ordem;
+  document.getElementById('bq').addEventListener('input', e => { FB.q = e.target.value; upd(); });
+  document.getElementById('bnom').addEventListener('change', e => { FB.nominal = e.target.checked; upd(); });
+  document.getElementById('bord').addEventListener('change', e => { FB.ordem = e.target.value; upd(); });
+  ligarPeriodo('bper', FB, upd);
+  ligarChips('#bcat', k => { FB.cat = k; upd(); });
+  ligarChips('#bres', k => { FB.res = k; upd(); });
+  renderBusca();
+}
+const passaCat = (v, c) => c === 'todos' || (c === 'ata' ? ['ata','out'].includes(v.cat) : v.cat === c);
+const passaRes = (v, r) => r === 'todos' || RESG[r].includes(v.res);
+function renderBusca(){
+  const q = norm(FB.q).trim();
+  let r = VT.filter(v => v.d >= FB.de && v.d <= FB.ate && passaCat(v, FB.cat) && passaRes(v, FB.res) && (!FB.nominal || NOM[v.id]) &&
+    (!q || (() => { const mat = D.MAT[v.m]; const hay = norm(v.lbl + ' ' + (mat ? mat[3] + ' ' + mat[4].join(' ') : '')); return q.split(/\s+/).every(t => hay.includes(t)); })()));
+  const contra = v => NOM[v.id] ? contagem(NOM[v.id]).N : -1;
+  r.sort((a,b) => FB.ordem === 'ant' ? a.d.localeCompare(b.d) || a.id - b.id : FB.ordem === 'div' ? contra(b) - contra(a) || b.d.localeCompare(a.d) : b.d.localeCompare(a.d) || b.id - a.id);
+  document.getElementById('count').textContent = `${num(r.length)} ${r.length === 1 ? 'votação' : 'votações'} de ${fmtData(FB.de)} a ${fmtData(FB.ate)}` + (FB.q && !FB.nominal ? '. A busca por palavra só alcança a ementa das votações nominais.' : '');
+  const el = document.getElementById('lista');
+  if (!r.length) { el.innerHTML = `<div class="empty">Nenhuma votação com esses filtros. Amplie o período ou escolha outro tipo.</div>`; return; }
+  el.innerHTML = r.slice(0, FB.limite).map(v => voteItem(v, `${fmtData(v.d)}${D.MAT[v.m] ? '. ' + esc((D.MAT[v.m][3]||'').slice(0,120)) + ((D.MAT[v.m][3]||'').length > 120 ? '…' : '') : ''}`)).join('') +
+    (r.length > FB.limite ? `<button class="btn ghost more" id="mais" type="button">Mostrar mais ${Math.min(40, r.length - FB.limite)}</button>` : '');
+  document.getElementById('mais')?.addEventListener('click', () => { FB.limite += 40; renderBusca(); });
+}
+
+/* ---------- Página da sessão ---------- */
+const FS = {res:'todos', cat:'todos'};
+function viewSessao(id){
+  const s = Sid[id];
+  if (!s) { app.innerHTML = `<a class="back" href="#votacoes">‹ Todas as sessões</a><div class="empty">Sessão não encontrada nos dados ${PERIODO_TXT}.</div>`; return; }
+  calState.mes = s.d.slice(0,7); calState.dia = null;
+  const vs = (votosSessao[id] || []).slice().sort((a,b) => a.id - b.id);
+  const i = comDados.findIndex(x => x.id === id);
+  const ant = i > 0 ? comDados[i-1] : null; const prox = i >= 0 && i < comDados.length-1 ? comDados[i+1] : null;
+  const pres = PRES[id];
+  const esperados = D.V.filter(v => v.mand && v.mand[0] <= s.d && v.mand[1] >= s.d).map(v => v.id);
+  const semReg = pres ? porNome(esperados.filter(p => !pres.has(p))) : [];
+  const apr = vs.filter(v => RESG.aprov.includes(v.res)).length;
+  let h = `<a class="back" href="#votacoes">‹ Todas as sessões</a>
+  <div class="shead"><div><h1>${esc(tipoCurto(s))} de ${fmtData(s.d)}</h1><p class="lede">${esc(sessNome(s))}, ${diaSemana(s.d)}</p></div>
+  <div class="snav">${ant ? `<a class="btn ghost" href="#s-${ant.id}" aria-label="Sessão anterior, ${fmtData(ant.d)}">‹ Anterior</a>` : ''}<button class="btn ghost" type="button" id="trocar" aria-expanded="false" aria-controls="calbox">Escolher data</button>${prox ? `<a class="btn ghost" href="#s-${prox.id}" aria-label="Próxima sessão, ${fmtData(prox.d)}">Próxima ›</a>` : ''}</div></div>
+  <div class="cal calbox hidden" id="calbox"></div>
+  <div class="facts">
+    <div class="fact"><b>${num(vs.length)}</b><span>votações</span></div>
+    <div class="fact"><b>${num(apr)}</b><span>aprovadas</span></div>
+    <div class="fact"><b>${vs.filter(v => NOM[v.id]).length}</b><span>com voto de cada vereador</span></div>
+    <div class="fact"><b>${pres ? pres.size : '–'}</b><span>vereadores presentes</span></div>
+  </div>
+  ${(s.pauta || s.ata) ? `<div class="docs">${s.pauta ? `<a class="btn ghost" href="${esc(s.pauta)}" target="_blank" rel="noopener">Pauta (PDF)</a>` : ''}${s.ata ? `<a class="btn ghost" href="${esc(s.ata)}" target="_blank" rel="noopener">Ata (PDF)</a>` : ''}</div>` : ''}`;
+  if (vs.length && vs.every(v => v.res === 3)) h += `<div class="callout" style="margin-top:1.5rem"><p>Nenhum item da pauta foi votado nesta sessão. O sistema da Câmara não informa o motivo, que pode ser falta de quórum, pedido de adiamento ou encerramento antecipado.</p></div>`;
+  if (!vs.length) h += `<div class="section"><div class="empty">${s.t === 'Solene' ? 'Sessões solenes são homenagens e não têm votações nem lista de presença.' : 'Não há votações registradas para esta sessão.'}</div></div>`;
+  else h += `<section class="section" aria-labelledby="h-vot"><h2 id="h-vot">Votações</h2>
+    <div class="filters">
+      <div class="frow" id="sres"><span class="flabel">Resultado</span>${chips('Resultado', [['todos','Todos'],['aprov','Aprovados'],['nao','Não aprovados'],['nv','Não votados']], FS.res)}</div>
+      <div class="frow" id="scat"><span class="flabel">Tipo</span>${chips('Tipo de proposta', [['todos','Todos'],['proj','Projetos e emendas'],['req','Requerimentos'],['moc','Moções'],['ata','Atas e outros']], FS.cat)}</div>
+    </div><div id="svot" aria-live="polite"></div></section>`;
+  if (pres) h += `<section class="section" aria-labelledby="h-pres"><h2 id="h-pres">Presença</h2>
+    <h3 style="margin:.5rem 0 .6rem">Presentes (${pres.size})</h3><div class="people">${porNome([...pres]).map(p => person(p, V[p]?.partido || '')).join('')}</div>
+    ${semReg.length ? `<h3 style="margin:1.5rem 0 .3rem">Sem registro de presença (${semReg.length})</h3><p class="note" style="margin:0 0 .6rem">Pode ser falta, licença ou afastamento. O sistema não informa o motivo.</p><div class="people">${semReg.map(p => person(p, V[p]?.partido || '')).join('')}</div>` : ''}</section>`;
+  app.innerHTML = h;
+  const tb = document.getElementById('trocar'); const cb = document.getElementById('calbox');
+  tb.addEventListener('click', () => { const ab = cb.classList.toggle('hidden') === false; tb.setAttribute('aria-expanded', ab); if (ab && !cb.dataset.ok) { calendario(cb, {picker:true}); cb.dataset.ok = 1; } });
+  if (!vs.length) return;
+  const render = () => {
+    const L = vs.filter(v => passaRes(v, FS.res) && passaCat(v, FS.cat));
+    const nom = L.filter(v => NOM[v.id]); const outras = L.filter(v => !NOM[v.id]);
+    let x = '';
+    if (!L.length) x = `<div class="empty">Nenhuma votação desta sessão com esses filtros.</div>`;
+    if (nom.length) x += `<h3 style="margin:.4rem 0 .3rem">Com voto de cada vereador (${nom.length})</h3>${legenda()}${nom.map(v => voteItem(v)).join('')}`;
+    if (outras.length) {
+      x += `<h3 style="margin:1.6rem 0 .3rem">Votações simbólicas (${outras.length})</h3><p class="note" style="margin:0 0 .8rem">Registram só o resultado. Toque em um grupo para abrir.</p>`;
+      ['proj','req','moc','ata'].forEach(c => {
+        const G = outras.filter(v => passaCat(v, c)); if (!G.length) return;
+        const ap = G.filter(v => RESG.aprov.includes(v.res)).length;
+        x += `<details class="cat" ${FS.cat !== 'todos' ? 'open' : ''}><summary><span>${CAT[c]} <span class="cnt">${G.length} ${G.length>1?'itens':'item'}, ${ap} ${ap===1?'aprovado':'aprovados'}</span></span>${CHEV}</summary><div class="inner">${G.map(v => voteItem(v)).join('')}</div></details>`;
+      });
+    }
+    document.getElementById('svot').innerHTML = x;
+  };
+  ligarChips('#sres', k => { FS.res = k; render(); });
+  ligarChips('#scat', k => { FS.cat = k; render(); });
+  render();
+}
+
+/* ---------- Presença ---------- */
+const FP = {p:ANO, de:ANO + '-01-01', ate:HOJE, ordem:'nome'};
+function presencaPeriodo(de, ate){
+  const ss = comDados.filter(s => PRES[s.id] && s.d >= de && s.d <= ate);
+  return {ss, L: D.V.map(v => { if (!v.mand) return null; const el = ss.filter(s => s.d >= v.mand[0] && s.d <= v.mand[1]); if (!el.length) return null; return {v, a: el.filter(s => PRES[s.id].has(v.id)).length, t: el.length}; }).filter(Boolean)};
+}
+function viewPresenca(){
+  app.innerHTML = `<h1>Presença nas sessões</h1>
+  <p class="lede">Quantas sessões ordinárias e extraordinárias cada vereador frequentou, contando só o período do seu mandato.</p>
+  <div class="callout"><p>O sistema da Câmara não registra licenças e afastamentos junto da presença. Um vereador licenciado aparece com presença menor, mesmo sem ter faltado. Para ver quem estava em um dia específico, <a href="#votacoes">abra a sessão no calendário</a>.</p></div>
+  <div class="filters">${blocoPeriodo('pper', FP)}
+    <div class="frow"><span class="flabel">Ordenar</span><select id="pord" aria-label="Ordenar"><option value="nome">Nome</option><option value="maior">Maior presença</option><option value="menor">Menor presença</option><option value="partido">Partido</option></select>
+    <label class="check"><input type="checkbox" id="pex">Incluir quem saiu ou foi suplente</label></div></div>
+  <p class="count" id="pcount" aria-live="polite"></p><div class="plist" id="plist"></div>`;
+  document.getElementById('pord').value = FP.ordem;
+  document.getElementById('pord').addEventListener('change', e => { FP.ordem = e.target.value; renderPres(); });
+  document.getElementById('pex').addEventListener('change', e => { FP.ex = e.target.checked; renderPres(); });
+  ligarPeriodo('pper', FP, renderPres);
+  renderPres();
+}
+function renderPres(){
+  const {ss, L: all} = presencaPeriodo(FP.de, FP.ate);
+  const L = all.filter(x => FP.ex || x.v.ativo);
+  const p = x => x.a / x.t;
+  L.sort((a,b) => FP.ordem === 'maior' ? p(b)-p(a) || a.v.nome.localeCompare(b.v.nome,'pt-BR') : FP.ordem === 'menor' ? p(a)-p(b) || a.v.nome.localeCompare(b.v.nome,'pt-BR') : FP.ordem === 'partido' ? (a.v.partido||'').localeCompare(b.v.partido||'') || a.v.nome.localeCompare(b.v.nome,'pt-BR') : a.v.nome.localeCompare(b.v.nome,'pt-BR'));
+  document.getElementById('pcount').textContent = ss.length ? `${ss.length} ${ss.length===1?'sessão':'sessões'} com lista de presença entre ${fmtData(FP.de)} e ${fmtData(FP.ate)}` : '';
+  document.getElementById('plist').innerHTML = L.length ? L.map(({v,a,t}) => { const x = pct(a,t);
+    return `<a class="prow" href="#v-${v.id}">${av(v.id,'sm')}<span class="who"><strong>${esc(v.nome)}</strong><span>${esc(v.partido||'')}${v.ativo?'':', fora do exercício'}</span></span><span class="meter" role="img" aria-label="${x}% de presença"><i style="width:${x}%"></i></span><span class="num"><b>${x}%</b><br><span class="note">${a} de ${t}</span></span></a>`; }).join('') : `<div class="empty" style="border:0">Nenhuma sessão com lista de presença nesse período.</div>`;
+}
+
+/* ---------- Comissões ---------- */
+const REU = (D.REU || []).map(r => ({id:r[0], c:r[1], n:r[2], nome:r[3], tema:r[4], d:r[5], hi:r[6], hf:r[7], local:r[8], obs:r[9], video:r[10], audio:r[11], pauta:r[12], ata:r[13], anexo:r[14]}));
+REU.forEach(r => { const t = norm((r.nome||'') + ' ' + (r.obs||'') + ' ' + (r.tema||'')); r.sit = /cancelad/.test(t) ? 'canc' : /nao realizada|nao foi realizada/.test(t) ? 'nr' : r.d > HOJE ? 'ag' : 'ok'; });
+const SIT = {ok:'Realizada', canc:'Cancelada', nr:'Não realizada', ag:'Agendada'};
+const REUc = {}; REU.forEach(r => (REUc[r.c] = REUc[r.c] || []).push(r));
+const PAU = D.PAU || {};
+const REL = (D.REL || []).map(r => ({m:r[0], p:r[1], c:r[2], ini:r[3], fim:r[4], conc:r[5], tfim:r[6]}));
+const TFIM = D.TFIM || {};
+const membrosCom = (() => { const pc = {}; D.V.forEach(v => v.com.forEach(([cid, cargo, tit]) => (pc[cid] = pc[cid] || []).push({id:v.id, cargo, tit}))); return pc; })();
+const cargoTxt = (c, tit) => esc(c) + (tit || /suplente/i.test(c) ? '' : ', suplente');
+const pesoCargo = c => c==='Presidente'?0:c==='Relator'?1:c==='Membro'?2:3;
+function viewComissoes(){
+  const L = Object.entries(membrosCom).map(([cid, ms]) => ({cid:+cid, nome:D.COM[cid][0], sig:D.COM[cid][1], tipo:D.COM[cid][2], ms})).sort((a,b) => a.tipo - b.tipo || a.nome.localeCompare(b.nome,'pt-BR'));
+  app.innerHTML = `<h1>Comissões</h1>
+  <p class="lede">Grupos de vereadores que analisam os projetos e dão parecer antes da votação em plenário. Escolha uma para ver integrantes${REU.length ? ', reuniões e projetos analisados' : ''}.</p>
+  <div class="filters"><div class="frow"><label style="flex:1 1 18rem"><span class="sr">Buscar comissão ou vereador</span><input id="cq" type="search" placeholder="Buscar comissão ou vereador"></label>
+  <label class="f">Ordenar <select id="cord"><option value="tipo">Tipo e nome</option><option value="nome">Nome</option>${REU.length ? '<option value="reu">Mais reuniões</option>' : ''}</select></label></div></div>
+  <div id="clist"></div>`;
+  const st = {q:'', o:'tipo'};
+  const render = () => { const q = norm(st.q);
+    const R = L.filter(c => !q || norm(c.nome + ' ' + c.sig + ' ' + c.ms.map(m => nomeV(m.id)).join(' ')).includes(q))
+      .sort((a,b) => st.o === 'nome' ? a.nome.localeCompare(b.nome,'pt-BR') : st.o === 'reu' ? (REUc[b.cid]||[]).length - (REUc[a.cid]||[]).length : a.tipo - b.tipo || a.nome.localeCompare(b.nome,'pt-BR'));
+    document.getElementById('clist').innerHTML = R.length ? R.map(c => { const pres = c.ms.find(m => m.cargo === 'Presidente'); const nr = (REUc[c.cid]||[]).length;
+      return `<a class="com comcard" href="#c-${c.cid}"><h3>${esc(c.nome)}</h3><span class="sig">${esc(c.sig)}, ${c.ms.length} integrantes${REU.length ? `, ${nr} ${nr===1?'reunião marcada':'reuniões marcadas'} ${PERIODO_TXT}` : ''}${pres ? `. Presidência: ${esc(nomeV(pres.id))}` : ''}</span>
+      <div class="avs" aria-hidden="true">${c.ms.sort((a,b) => pesoCargo(a.cargo)-pesoCargo(b.cargo)).slice(0,9).map(m => av(m.id,'sm')).join('')}</div></a>`; }).join('') : `<div class="empty">Nenhuma comissão encontrada. Tente outro nome.</div>`;
+  };
+  document.getElementById('cq').addEventListener('input', e => { st.q = e.target.value; render(); });
+  document.getElementById('cord').addEventListener('change', e => { st.o = e.target.value; render(); });
+  render();
+}
+const FC = {p:'tudo', de:DATA_MIN, ate:HOJE, so:'todas'};
+function viewComissao(cid){
+  const c = D.COM[cid]; const ms = (membrosCom[cid] || []).slice().sort((a,b) => pesoCargo(a.cargo)-pesoCargo(b.cargo) || nomeV(a.id).localeCompare(nomeV(b.id),'pt-BR'));
+  if (!c) { app.innerHTML = `<a class="back" href="#comissoes">‹ Comissões</a><div class="empty">Comissão não encontrada.</div>`; return; }
+  let h = `<a class="back" href="#comissoes">‹ Comissões</a><h1>${esc(c[0])}</h1><p class="lede">${esc(c[1])}, composição atual</p>
+  <section class="section" aria-labelledby="h-int"><h2 id="h-int">Integrantes</h2><div class="people">${ms.map(m => person(m.id, cargoTxt(m.cargo, m.tit))).join('')}</div></section>`;
+  if (!REU.length) { h += `<section class="section"><div class="empty">Os dados de reuniões e relatorias das comissões ainda não foram carregados neste protótipo.</div></section>`; app.innerHTML = h; return; }
+  h += `<section class="section" aria-labelledby="h-reu"><h2 id="h-reu">Reuniões</h2>
+    <div class="filters">${blocoPeriodo('cper', FC)}
+    <div class="frow" id="cso"><span class="flabel">Mostrar</span>${chips('Mostrar', [['todas','Todas'],['ok','Realizadas'],['canc','Canceladas ou não realizadas'],['ata','Com ata']], FC.so)}</div></div>
+    <div class="facts" id="cfacts" style="margin-top:.5rem"></div><div id="creu" style="margin-top:1rem"></div></section>
+  <section class="section" aria-labelledby="h-rel"><h2 id="h-rel">Relatorias</h2><p class="note" style="margin:-.5rem 0 1rem">Projetos que receberam um relator nesta comissão no período escolhido. O relator estuda o projeto e propõe o parecer. A pauta de cada reunião está no PDF, porque o sistema não registra quais projetos foram discutidos em cada uma.</p><div id="crel"></div></section>`;
+  app.innerHTML = h;
+  const render = () => {
+    const R = (REUc[cid] || []).filter(r => r.d >= FC.de && r.d <= FC.ate).sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id);
+    const F = R.filter(r => FC.so === 'todas' || (FC.so === 'ata' ? r.ata : FC.so === 'ok' ? r.sit === 'ok' : (r.sit === 'canc' || r.sit === 'nr')));
+    const nok = R.filter(r => r.sit === 'ok').length, ncanc = R.filter(r => r.sit === 'canc' || r.sit === 'nr').length;
+    const rel = REL.filter(x => x.c === cid && x.ini >= FC.de && x.ini <= FC.ate).sort((a,b) => b.ini.localeCompare(a.ini));
+    document.getElementById('cfacts').innerHTML = `<div class="fact"><b>${R.length}</b><span>reuniões marcadas</span></div><div class="fact"><b>${nok}</b><span>realizadas</span></div><div class="fact"><b>${ncanc}</b><span>canceladas ou não realizadas</span></div><div class="fact"><b>${R.filter(r => r.ata).length}</b><span>com ata publicada</span></div><div class="fact"><b>${rel.length}</b><span>projetos com relator</span></div>`;
+    document.getElementById('creu').innerHTML = F.length ? F.map(r => { const pm = [];
+      return `<details class="cat reu"><summary><span class="rdate"><b>${dt(r.d).getDate()}</b><small>${dt(r.d).toLocaleDateString('pt-BR',{month:'short',year:'2-digit'}).replace('.','')}</small></span><span class="rinfo"><strong>${esc((r.nome || (r.n ? r.n + 'ª reunião' : 'Reunião')).replace(/\s*[-–]\s*cancelada\s*$/i,''))}</strong><span>${esc(r.tema ? r.tema.slice(0,110) + (r.tema.length > 110 ? '…' : '') : diaSemana(r.d))}</span></span><span style="display:flex;align-items:center;gap:.5rem"><span class="badge ${r.sit==='ok'?'b1':r.sit==='ag'?'b3':'b2'}">${SIT[r.sit]}</span>${CHEV}</span></summary>
+      <div class="inner">${r.tema && r.tema.length > 110 ? `<p>${esc(r.tema)}</p>` : ''}<p class="note">${fmtData(r.d)}${r.hi ? `, das ${r.hi.slice(0,5)}${r.hf ? ' às ' + r.hf.slice(0,5) : ''}` : ''}${r.local ? `. ${esc(r.local)}` : ''}</p>${r.obs ? `<p>${esc(r.obs)}</p>` : ''}
+      <div class="links">${r.pauta ? `<a href="${esc(r.pauta)}" target="_blank" rel="noopener">Pauta (PDF)</a>` : ''}${r.ata ? `<a href="${esc(r.ata)}" target="_blank" rel="noopener">Ata (PDF)</a>` : ''}${r.anexo ? `<a href="${esc(r.anexo)}" target="_blank" rel="noopener">Anexo</a>` : ''}${r.video ? `<a href="${esc(r.video)}" target="_blank" rel="noopener">Vídeo</a>` : ''}${r.audio ? `<a href="${esc(r.audio)}" target="_blank" rel="noopener">Áudio</a>` : ''}${!(r.pauta||r.ata||r.video||r.audio) ? '<span class="note">Sem documentos publicados.</span>' : ''}</div>
+      ${pm.length ? `<ul class="mlist">${pm.map(mid => `<li><strong><a href="${SAPL}/materia/${mid}" target="_blank" rel="noopener">${esc(matRot(mid))}</a></strong><span>${esc((D.MAT[mid]||[])[3] || '')}</span></li>`).join('')}</ul>` : ''}</div></details>`; }).join('') : `<div class="empty">Nenhuma reunião registrada nesse período com esse filtro.</div>`;
+    document.getElementById('crel').innerHTML = rel.length ? `<div class="tablewrap"><table class="t"><thead><tr><th scope="col">Projeto</th><th scope="col">Relator</th><th scope="col">Designado em</th><th scope="col">Situação</th></tr></thead><tbody>${rel.slice(0,100).map(x => `<tr><td><a href="${SAPL}/materia/${x.m}" target="_blank" rel="noopener">${esc(matRot(x.m))}</a><br><span class="note">${esc(((D.MAT[x.m]||[])[3]||'').slice(0,120))}</span></td><td>${V[x.p] ? `<a href="#v-${x.p}">${esc(nomeV(x.p))}</a>` : 'Parlamentar ' + x.p}</td><td>${fmtCurta(x.ini)} ${x.ini.slice(0,4)}</td><td>${x.fim || x.tfim ? esc(TFIM[x.tfim] ? 'Parecer ' + TFIM[x.tfim].toLowerCase() : 'Encerrada') : 'Em andamento'}</td></tr>`).join('')}</tbody></table></div>${rel.length > 100 ? `<p class="note">Mostrando as 100 mais recentes de ${rel.length}.</p>` : ''}` : `<div class="empty">Nenhuma relatoria registrada nesse período.</div>`;
+  };
+  ligarPeriodo('cper', FC, render);
+  ligarChips('#cso', k => { FC.so = k; render(); });
+  render();
+}
+
+/* ---------- Vereadores ---------- */
+const FV = {q:'', todos:false, ordem:'nome'};
+function viewVereadores(){
+  app.innerHTML = `<h1>Vereadores</h1>
+  <p class="lede">Os ${ATIVOS.length} vereadores em exercício. Escolha um para ver partido, comissões, presença e votos.</p>
+  <div class="filters"><div class="frow"><label style="flex:1 1 18rem"><span class="sr">Buscar vereador ou partido</span><input id="vq" type="search" placeholder="Buscar por nome ou partido" value="${esc(FV.q)}"></label>
+  <label class="f">Ordenar <select id="vord"><option value="nome">Nome</option><option value="partido">Partido</option></select></label>
+  <label class="check"><input type="checkbox" id="vtodos" ${FV.todos?'checked':''}>Incluir quem saiu ou foi suplente</label></div></div>
+  <div class="faces" id="vgrid"></div>`;
+  const render = () => { const q = norm(FV.q);
+    const L = (FV.todos ? D.V : ATIVOS).filter(v => !q || norm(v.nome + ' ' + (v.partido||'') + ' ' + (v.completo||'')).includes(q)).slice()
+      .sort((a,b) => FV.ordem === 'partido' ? (a.partido||'').localeCompare(b.partido||'') || a.nome.localeCompare(b.nome,'pt-BR') : a.nome.localeCompare(b.nome,'pt-BR'));
+    document.getElementById('vgrid').innerHTML = L.length ? L.map(v => `<a class="face" href="#v-${v.id}">${av(v.id,'lg')}<span class="nm">${esc(v.nome)}</span><span class="pt">${esc(v.partido||'')}${v.ativo?'':', fora do exercício'}</span></a>`).join('') : `<div class="empty">Nenhum vereador com esse nome ou partido.</div>`;
+  };
+  document.getElementById('vord').value = FV.ordem;
+  document.getElementById('vq').addEventListener('input', e => { FV.q = e.target.value; render(); });
+  document.getElementById('vord').addEventListener('change', e => { FV.ordem = e.target.value; render(); });
+  document.getElementById('vtodos').addEventListener('change', e => { FV.todos = e.target.checked; render(); });
+  render();
+}
+const FPV = {p:'tudo', de:DATA_MIN, ate:HOJE, voto:'todos', cat:'todos', div:false};
+function viewPerfil(id){
+  const v = V[id];
+  if (!v) { app.innerHTML = `<a class="back" href="#vereadores">‹ Vereadores</a><div class="empty">Não há dados deste parlamentar ${PERIODO_TXT}.</div>`; return; }
+  const minhas = VT.filter(x => NOM[x.id] && NOM[x.id][id]);
+  const ehDiv = x => { const c = contagem(NOM[x.id]); const meu = NOM[x.id][id]; return (meu==='S'||meu==='N') && c.S !== c.N && ((meu==='S') !== (c.S > c.N)); };
+  const tot = Object.values(v.votos).reduce((a,b)=>a+b,0);
+  const presBox = (de, ate, rot) => { const r = presencaPeriodo(de, ate).L.find(x => x.v.id === id); if (!r) return `<p class="note">Sem sessões no período de mandato.</p>`; const x = pct(r.a, r.t); return `<div class="big">${x}%</div><div class="meter" style="margin:.7rem 0 .4rem" aria-hidden="true"><i style="width:${x}%"></i></div><div class="note">${r.a} de ${r.t} sessões${rot}</div>`; };
+  const coms = v.com.map(([cid,cargo,tit]) => ({cid,cargo,tit,nome:(D.COM[cid]||[])[0]||'Comissão',sig:(D.COM[cid]||[])[1]||''})).sort((a,b) => pesoCargo(a.cargo)-pesoCargo(b.cargo) || a.nome.localeCompare(b.nome,'pt-BR'));
+  const relv = REL.filter(x => x.p === id);
+  const mand = v.mand;
+  app.innerHTML = `<a class="back" href="#vereadores">‹ Vereadores</a>
+  <div class="phead">${av(id,'xl')}<div><h1>${esc(v.nome)}</h1>
+    <p class="lede" style="margin-top:.3rem">${esc(v.partido || 'Partido não informado')}${v.completo && v.completo !== v.nome ? '. ' + esc(v.completo) : ''}${v.prof ? '. ' + esc(v.prof) : ''}</p>
+    <p class="note" style="margin:.3rem 0 0">${mand ? `Mandato ${mand[2] ? 'como titular' : 'como suplente'} de ${fmtData(mand[0])} a ${fmtData(mand[1])}` : 'Sem mandato registrado na legislatura atual'}${v.ativo ? '' : '. Fora do exercício hoje'}${v.email ? `. <a href="mailto:${esc(v.email)}">${esc(v.email)}</a>` : ''}${v.tel ? '. Tel. ' + esc(v.tel) : ''}</p></div></div>
+  <div class="stats">
+    ${ANOS.slice(0,2).map(a => `<div class="stat"><h3>Presença em ${a}</h3>${presBox(a + '-01-01', a === ANO ? HOJE : a + '-12-31', a === ANO ? ' até agora' : '')}</div>`).join('')}
+    <div class="stat"><h3>Votações nominais</h3><div class="big">${num(minhas.length)}</div>
+      ${tot ? `<div class="hbar" aria-hidden="true">${['S','N','A','F'].filter(k=>v.votos[k]).map(k => `<i style="width:${100*v.votos[k]/(tot-(v.votos.P||0))}%;background:var(--${VCOR[k]})"></i>`).join('')}</div><div class="note">${VOTO_ORDEM.filter(k=>v.votos[k]).map(k => `${VOTO[k]}: ${v.votos[k]}`).join('. ')}</div>` : ''}
+      <div class="note" style="margin-top:.4rem">Votou diferente da maioria em ${minhas.filter(ehDiv).length} de ${v.alin[1]} votações.</div></div>
+  </div>
+  <p class="note">A presença conta só sessões com lista registrada, dentro do período de mandato. Licenças e afastamentos ainda não são descontados.</p>
+  <section class="section" aria-labelledby="h-com"><h2 id="h-com">Comissões</h2>
+  ${coms.length ? `<div class="tablewrap"><table class="t"><thead><tr><th scope="col">Comissão</th><th scope="col">Função</th></tr></thead><tbody>${coms.map(c => `<tr><td><a href="#c-${c.cid}">${esc(c.nome)}</a> <span class="note">${esc(c.sig)}</span></td><td>${cargoTxt(c.cargo, c.tit)}</td></tr>`).join('')}</tbody></table></div>` : `<p class="note">Nenhuma participação ativa em comissão registrada.</p>`}
+  ${relv.length ? `<p class="note" style="margin-top:.8rem">Foi designado relator de ${relv.length} ${relv.length===1?'projeto':'projetos'} em comissões ${PERIODO_TXT}.</p>` : ''}
+  </section>
+  <section class="section" aria-labelledby="h-vot"><h2 id="h-vot">Como votou</h2>
+    <div class="filters">${blocoPeriodo('vper', FPV)}
+      <div class="frow" id="vvoto"><span class="flabel">Voto</span>${chips('Voto', [['todos','Todos'],['S','Sim'],['N','Não'],['A','Abstenção'],['F','Ausente']], FPV.voto)}</div>
+      <div class="frow" id="vcat"><span class="flabel">Tipo</span>${chips('Tipo de proposta', [['todos','Todos'],['proj','Projetos e emendas'],['req','Requerimentos'],['moc','Moções']], FPV.cat)}</div>
+      <label class="check"><input type="checkbox" id="vdiv" ${FPV.div?'checked':''}>Só quando votou diferente da maioria</label>
+    </div>${legenda()}<p class="count" id="vcount" aria-live="polite"></p><div id="pvotos"></div></section>`;
+  const render = () => {
+    const L = minhas.filter(x => x.d >= FPV.de && x.d <= FPV.ate && (FPV.voto === 'todos' || NOM[x.id][id] === FPV.voto) && passaCat(x, FPV.cat) && (!FPV.div || ehDiv(x))).sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id);
+    document.getElementById('vcount').textContent = `${num(L.length)} ${L.length===1?'votação':'votações'}`;
+    document.getElementById('pvotos').innerHTML = L.length ? L.slice(0, 60).map(x => { const k = NOM[x.id][id]; return voteItem(x, `${fmtData(x.d)}. Votou: <span class="voto-tag" style="--c:var(--${VCOR[k]})">${VOTO[k]}</span>`); }).join('') + (L.length > 60 ? `<p class="note">Mostrando as 60 mais recentes. Use o período para ver outras.</p>` : '') : `<div class="empty">Nenhuma votação com esses filtros.</div>`;
+  };
+  ligarPeriodo('vper', FPV, render);
+  ligarChips('#vvoto', k => { FPV.voto = k; render(); });
+  ligarChips('#vcat', k => { FPV.cat = k; render(); });
+  document.getElementById('vdiv').addEventListener('change', e => { FPV.div = e.target.checked; render(); });
+  render();
+}
+
+/* ---------- Sobre ---------- */
+function viewSobre(){
+  const nNom = Object.keys(NOM).length;
+  app.innerHTML = `<div class="prose"><h1>Sobre os dados</h1>
+  <p class="lede">Os dados vêm da API pública do SAPL, o sistema legislativo da Câmara Municipal de Campinas. Foram coletados em ${fmtData(D.gerado.slice(0,10))} e cobrem a legislatura atual, ${PERIODO_TXT}: ${num(VT.length)} votações, ${num(nNom)} delas com o voto de cada vereador, ${comDados.length} sessões com votações ou presença${REU.length ? ` e ${num(REU.length)} reuniões de comissão` : ''}.</p>
+  <h2>O que é confiável</h2>
+  <p>O resultado de cada votação e a data da sessão. A data vem da sessão plenária, porque a data gravada em cada votação reflete quando o registro foi lançado no sistema.</p>
+  <p>O voto de cada vereador nas votações nominais. Nos casos verificados, a soma dos votos individuais bate com o placar oficial em praticamente todas as votações.</p>
+  <h2>O que tem limites</h2>
+  <p>A maioria das votações é simbólica e registra só o resultado. Por isso o histórico de cada vereador mostra apenas as votações nominais, uma fração do total.</p>
+  <p>A presença considera sessões ordinárias e extraordinárias com lista registrada, dentro do período de mandato de cada parlamentar. Sessões solenes não têm lista de presença. Licenças e afastamentos ainda não são descontados.</p>
+  <p>Nas comissões, o sistema registra cada reunião marcada com data e documentos (pauta e ata em PDF), mas não tem um campo próprio para cancelamento. Aqui, uma reunião é considerada cancelada quando o nome ou a observação diz isso, e “não realizada” quando a observação diz que ela não aconteceu. O sistema também não registra quais projetos foram discutidos em cada reunião nem a presença dos vereadores nas comissões.</p>
+  <p>“Aprovados” reúne aprovado, acatado e procedente. “Não aprovados” reúne rejeitado, improcedente e mantido (usado quando um veto é mantido).</p>
+  <p>Os valores de voto vêm sem padrão no sistema (“Não” e “Nao”, “Ausente”, “-1”, campos vazios). Aqui, “Ausente”, “Ausente na Votação”, “-1”, “Não Votou” e vazio aparecem como ausente. A barra de votos não mostra quem estava na presidência, que não vota.</p>
+  <p>“Votou diferente da maioria” compara o voto sim ou não do vereador com o lado que teve mais votos. Como quase todas as votações nominais são aprovadas por ampla maioria, esse número tende a ser baixo para todos.</p>
+  <h2>Acessibilidade</h2>
+  <p>Use o botão A+ no topo para aumentar o texto e o botão de lua para trocar entre tema claro e escuro. Todo o site funciona pelo teclado, e a primeira tecla Tab oferece um atalho para pular direto ao conteúdo.</p>
+  <h2>Fonte</h2>
+  <p><a href="${SAPL}/api/schema/swagger-ui/" target="_blank" rel="noopener">Documentação da API do SAPL de Campinas</a>. Este é um protótipo independente e não substitui as informações oficiais da Câmara.</p></div>`;
+}
+
+/* ---------- Rotas ---------- */
+const VIEWS = {inicio:[viewInicio,'Início','inicio'], votacoes:[viewVotacoes,'Votações','votacoes'], busca:[viewBusca,'Todas as votações','votacoes'], presenca:[viewPresenca,'Presença','presenca'], comissoes:[viewComissoes,'Comissões','comissoes'], vereadores:[viewVereadores,'Vereadores','vereadores'], sobre:[viewSobre,'Sobre os dados','sobre']};
+function rota(){
+  const h = location.hash.replace('#','');
+  let tab, titulo;
+  if (/^v-\d+$/.test(h)) { tab = 'vereadores'; viewPerfil(+h.slice(2)); titulo = V[+h.slice(2)]?.nome || 'Vereador'; }
+  else if (/^s-\d+$/.test(h)) { tab = 'votacoes'; viewSessao(+h.slice(2)); const s = Sid[+h.slice(2)]; titulo = s ? 'Sessão de ' + fmtData(s.d) : 'Sessão'; }
+  else if (/^c-\d+$/.test(h)) { tab = 'comissoes'; viewComissao(+h.slice(2)); titulo = (D.COM[+h.slice(2)]||[])[1] || 'Comissão'; }
+  else { const k = VIEWS[h] ? h : 'inicio'; VIEWS[k][0](); titulo = VIEWS[k][1]; tab = VIEWS[k][2]; }
+  document.title = titulo + ' – Plenário Aberto';
+  document.querySelectorAll('nav.tabs a').forEach(a => { if (a.dataset.view === tab) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+}
+window.addEventListener('hashchange', () => { rota(); window.scrollTo(0,0); app.focus({preventScroll:true}); });
+rota();
+})();
+</script>
+</body>
+</html>
