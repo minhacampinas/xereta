@@ -4,6 +4,7 @@ e monta a página index.html.
 
 Uso:
   python coletar.py                 coleta tudo na API e gera index.html
+  python coletar.py --leg 18        coleta uma legislatura anterior e gera leg-18.html
   python coletar.py --bruto x.json  gera index.html a partir de uma coleta salva
 """
 import base64, collections, io, json, sys, time
@@ -61,14 +62,19 @@ def log(msg):
 
 
 # ---------------------------------------------------------------- coleta
-def coletar():
+def coletar(leg_num=None):
     R = {'gerado_em': datetime.now(timezone.utc).isoformat()}
 
     log('legislatura e parlamentares')
     legs = todos('/parlamentares/legislatura/')
-    leg = next(l for l in legs if l['data_inicio'] <= HOJE <= l['data_fim'])
-    INICIO = leg['data_inicio']
-    R['legislatura'] = {'id': leg['id'], 'numero': leg['numero'], 'inicio': INICIO, 'fim': leg['data_fim']}
+    if leg_num:
+        leg = next(l for l in legs if l['numero'] == leg_num)
+    else:
+        leg = next(l for l in legs if l['data_inicio'] <= HOJE <= l['data_fim'])
+    INICIO, FIM = leg['data_inicio'], leg['data_fim']
+    REF = min(HOJE, FIM)  # data de referência: hoje, ou o último dia de uma legislatura já encerrada
+    R['hoje'] = REF
+    R['legislatura'] = {'id': leg['id'], 'numero': leg['numero'], 'inicio': INICIO, 'fim': FIM, 'atual': FIM >= HOJE}
     R['parlamentares'] = [dict(id=x['id'], nome=x['nome_parlamentar'], completo=x['nome_completo'], ativo=x['ativo'],
                                email=x.get('email') or None, tel=x.get('telefone') or None, prof=x.get('profissao') or None,
                                foto=x.get('fotografia') or None)
@@ -82,12 +88,12 @@ def coletar():
     log('sessões')
     lista = get('/sessao/sessaoplenaria/')
     R['sessoes'] = [dict(id=s['id'], n=s['numero'], d=s['data_inicio'], t=s['tipo'], ata=s.get('upload_ata') or None,
-                         pauta=s.get('upload_pauta') or None) for s in lista if s['data_inicio'] >= INICIO]
+                         pauta=s.get('upload_pauta') or None) for s in lista if INICIO <= s['data_inicio'] <= FIM]
 
     log('comissões')
     R['comissoes'] = [dict(id=x['id'], nome=x['nome'], sigla=x['sigla'], tipo=x['tipo']) for x in todos('/comissoes/comissao/')]
     R['cargos'] = {x['id']: x['nome'] for x in todos('/comissoes/cargocomissao/')}
-    periodo = next((p for p in todos('/comissoes/periodo/') if p['data_inicio'] <= HOJE <= (p['data_fim'] or '9999')), None)
+    periodo = next((p for p in todos('/comissoes/periodo/') if p['data_inicio'] <= REF <= (p['data_fim'] or '9999')), None)
     comps = todos('/comissoes/composicao/', f'periodo={periodo["id"]}') if periodo else []
     R['composicoes'] = [dict(id=c['id'], comissao=c['comissao']) for c in comps]
     parts = paralelo(lambda c: todos('/comissoes/participacao/', f'composicao={c["id"]}'), comps, 4)
@@ -95,8 +101,10 @@ def coletar():
                           for c, ps in zip(comps, parts) for x in ps]
 
     log('pauta das sessões')
-    od = todos('/sessao/ordemdia/', f'data_ordem__gte={INICIO}')
-    ex = todos('/sessao/expedientemateria/', f'data_ordem__gte={INICIO}')
+    od = [x for x in todos('/sessao/ordemdia/', f'data_ordem__gte={INICIO}&data_ordem__lte={FIM}')
+          if INICIO <= x['data_ordem'] <= FIM]
+    ex = [x for x in todos('/sessao/expedientemateria/', f'data_ordem__gte={INICIO}&data_ordem__lte={FIM}')
+          if INICIO <= x['data_ordem'] <= FIM]
     item = {('OD', x['id']): x for x in od}
     item.update({('EX', x['id']): x for x in ex})
 
@@ -124,7 +132,7 @@ def coletar():
     R['votos'] = [[x['votacao'], x['parlamentar'], normaliza(x['voto'])] for b in votos for x in b]
 
     log('presença')
-    sids = [s['id'] for s in R['sessoes'] if s['d'] <= HOJE]
+    sids = [s['id'] for s in R['sessoes'] if s['d'] <= REF]
     pres = paralelo(lambda b: todos('/sessao/sessaoplenariapresenca/', 'sessao_plenaria__in=' + ','.join(map(str, b))), blocos(sids, 40), 4)
     R['presenca'] = [[x['sessao_plenaria'], x['parlamentar']] for b in pres for x in b]
 
@@ -133,10 +141,12 @@ def coletar():
                           hi=x['hora_inicio'], hf=x['hora_fim'], local=x['local_reuniao'], obs=x['observacao'],
                           video=x.get('url_video') or None, audio=x.get('url_audio') or None, pauta=x.get('upload_pauta') or None,
                           ata=x.get('upload_ata') or None, anexo=x.get('upload_anexo') or None)
-                     for x in todos('/comissoes/reuniao/', f'data__gte={INICIO}')]
+                     for x in todos('/comissoes/reuniao/', f'data__gte={INICIO}&data__lte={FIM}')
+                     if INICIO <= x['data'] <= FIM]
     R['relatorias'] = [dict(m=x['materia'], p=x['parlamentar'], c=x['comissao'], ini=x['data_designacao_relator'],
                             fim=x['data_destituicao_relator'], tfim=x['tipo_fim_relatoria'])
-                       for x in todos('/materia/relatoria/', f'data_designacao_relator__gte={INICIO}')]
+                       for x in todos('/materia/relatoria/', f'data_designacao_relator__gte={INICIO}&data_designacao_relator__lte={FIM}')
+                       if x['data_designacao_relator'] and INICIO <= x['data_designacao_relator'] <= FIM]
     R['tipos_fim'] = {x['id']: x.get('descricao') or x['__str__'] for x in todos('/materia/tipofimrelatoria/')}
 
     log('matérias')
@@ -219,8 +229,10 @@ def categoria(rot):
     return 'out'
 
 
-def montar(R):
+def montar(R, saida='index.html'):
     hoje = R.get('hoje') or HOJE
+    leg = R.get('legislatura') or {}
+    atual = leg.get('atual', True)
     sess = {s['id']: s for s in R['sessoes']}
     parl = {p['id']: p for p in R['parlamentares']}
     sigla_partido = {p['id']: p['sigla'] for p in R['partidos']}
@@ -266,8 +278,9 @@ def montar(R):
                 alin[1] += 1
                 alin[0] += (c == 'S') == (s_ > n_)
         com = [[comp[x['comp']], cargos.get(x['cargo'], ''), x['titular']] for x in R['participacoes']
-               if x['p'] == pid and not x['fim'] and x['comp'] in comp]
-        V.append(dict(id=pid, nome=p['nome'], completo=p['completo'], ativo=p['ativo'], partido=partido(pid),
+               if x['p'] == pid and (not x['fim'] or x['fim'] >= hoje) and x['comp'] in comp]
+        ativo = p['ativo'] if atual else any(x['p'] == pid and (not x['fim'] or x['fim'] >= hoje) for x in R['mandatos'])
+        V.append(dict(id=pid, nome=p['nome'], completo=p['completo'], ativo=ativo, partido=partido(pid),
                       email=p['email'], tel=p['tel'], prof=p['prof'],
                       mand=[m['ini'], m['fim'], bool(m['titular'])] if m else None,
                       votos=dict(cnt), alin=alin, com=com))
@@ -290,7 +303,7 @@ def montar(R):
     COM = {str(c['id']): [c['nome'], c['sigla'], c['tipo']] for c in R['comissoes'] if c['id'] in usadas}
 
     dados = dict(
-        gerado=R['gerado_em'], hoje=hoje, res={str(k): v for k, v in RESULTADOS.items()},
+        gerado=R['gerado_em'], hoje=hoje, LEG=dict(n=leg.get('numero'), ini=leg.get('inicio'), fim=leg.get('fim'), atual=atual), res={str(k): v for k, v in RESULTADOS.items()},
         V=V, S={s['id']: [s['n'], s['d'], s['t'], s['ata'], s['pauta']] for s in R['sessoes']},
         VT=VT, NOM={vid: ','.join(f'{p}{c}' for p, c in votos_por[vid].items()) for vid in nominais},
         MAT=MAT, COM=COM,
@@ -304,18 +317,20 @@ def montar(R):
     )
     js = json.dumps(dados, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     html = open('modelo.html', encoding='utf-8').read().replace('__DATA__', js)
-    open('index.html', 'w', encoding='utf-8').write(html)
-    log(f'index.html gerado: {len(html)//1024} KB, {len(VT)} votações, {len(nominais)} nominais, '
+    open(saida, 'w', encoding='utf-8').write(html)
+    log(f'{saida} gerado: {len(html)//1024} KB, {len(VT)} votações, {len(nominais)} nominais, '
         f'{len(R["reunioes"])} reuniões, {len(dados["FOTOS"])} fotos')
     return dados
 
 
 if __name__ == '__main__':
+    leg_num = int(sys.argv[sys.argv.index('--leg') + 1]) if '--leg' in sys.argv else None
     if '--bruto' in sys.argv:
         R = json.load(open(sys.argv[sys.argv.index('--bruto') + 1], encoding='utf-8'))
     else:
-        R = coletar()
+        R = coletar(leg_num)
         json.dump(R, open('coleta.json', 'w', encoding='utf-8'), ensure_ascii=False)
-    d = montar(R)
+    saida = f"leg-{R['legislatura']['numero']}.html" if leg_num else 'index.html'
+    d = montar(R, saida)
     if len(d['VT']) < 100 or len(d['V']) < 20:
         sys.exit('Coleta incompleta: index.html não deve ser publicado.')

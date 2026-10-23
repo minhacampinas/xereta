@@ -65,6 +65,8 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-to
 .brandtxt{display:flex;flex-direction:column;line-height:1.1}
 .brandtxt small{font-family:var(--body);font-weight:400;font-size:.72rem;letter-spacing:0;color:var(--muted);margin-top:.15rem;white-space:normal}
 @media (max-width:360px){.brandtxt small{display:none}}
+.legsel{flex:none;min-height:2.75rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;padding:0 .9rem;margin-right:.35rem;cursor:pointer}
+.histbar{background:var(--warn-bg);color:var(--warn-ink);padding:.65rem 0;font-weight:700;font-size:.95rem}
 .tools{display:flex;gap:.4rem}
 .tool{min-width:2.75rem;height:2.75rem;padding:0 .7rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:.35rem}
 .tool svg{width:1.15rem;height:1.15rem}
@@ -379,6 +381,17 @@ const CAT = {proj:'Projetos e emendas', req:'Requerimentos', moc:'Moções', ata
 const RESG = {aprov:[1,7,8], nao:[2,4,9], nv:[3]};
 const CHEV = '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 document.getElementById('gerado').textContent = fmtData(D.gerado.slice(0,10));
+
+/* legislaturas: lista em legislaturas.json, uma página por legislatura */
+const LEG = D.LEG || {n:null, atual:true};
+const noFim = LEG.atual === false ? ' no fim da legislatura' : '';
+if (LEG.atual === false) app.insertAdjacentHTML('beforebegin', `<div class="histbar"><div class="wrap">Você está vendo a ${LEG.n}ª legislatura (${LEG.ini.slice(0,4)}–${LEG.fim.slice(0,4)}), já encerrada. Estes dados não são mais atualizados.</div></div>`);
+fetch('legislaturas.json').then(r => r.ok ? r.json() : Promise.reject()).then(L => {
+  if (!Array.isArray(L) || L.length < 2) return;
+  const sel = L.map(x => `<option value="${esc(x.url)}"${x.n === LEG.n ? ' selected' : ''}>${x.n}ª · ${esc(x.periodo)}</option>`).join('');
+  document.querySelector('nav.tabs').insertAdjacentHTML('afterbegin', `<select class="legsel" id="selLeg" aria-label="Legislatura">${sel}</select>`);
+  document.getElementById('selLeg').addEventListener('change', e => { location.href = e.target.value + '#inicio'; });
+}).catch(() => {});
 
 /* preferências */
 const root = document.documentElement;
@@ -783,7 +796,7 @@ function viewComissao(cid){
 const FV = {q:'', todos:false, ordem:'nome'};
 function viewVereadores(){
   app.innerHTML = `<h1>Vereadores</h1>
-  <p class="lede">Os ${ATIVOS.length} vereadores em exercício. Escolha um para ver partido, comissões, presença e votos.</p>
+  <p class="lede">Os ${ATIVOS.length} vereadores em exercício${noFim}. Escolha um para ver partido, comissões, presença e votos.</p>
   <div class="filters"><div class="frow"><label style="flex:1 1 18rem"><span class="sr">Buscar vereador ou partido</span><input id="vq" type="search" placeholder="Buscar por nome ou partido" value="${esc(FV.q)}"></label>
   <label class="f">Ordenar <select id="vord"><option value="nome">Nome</option><option value="partido">Partido</option></select></label>
   <label class="check"><input type="checkbox" id="vtodos" ${FV.todos?'checked':''}>Incluir quem saiu ou foi suplente</label></div></div>
@@ -813,7 +826,7 @@ function viewPerfil(id){
   app.innerHTML = `<a class="back" href="#vereadores">‹ Vereadores</a>
   <div class="phead">${av(id,'xl')}<div><h1>${esc(v.nome)}</h1>
     <p class="lede" style="margin-top:.3rem">${esc(v.partido || 'Partido não informado')}${v.completo && v.completo !== v.nome ? '. ' + esc(v.completo) : ''}${v.prof ? '. ' + esc(v.prof) : ''}</p>
-    <p class="note" style="margin:.3rem 0 0">${mand ? `Mandato ${mand[2] ? 'como titular' : 'como suplente'} de ${fmtData(mand[0])} a ${fmtData(mand[1])}` : 'Sem mandato registrado na legislatura atual'}${v.ativo ? '' : '. Fora do exercício hoje'}${v.email ? `. <a href="mailto:${esc(v.email)}">${esc(v.email)}</a>` : ''}${v.tel ? '. Tel. ' + esc(v.tel) : ''}</p></div></div>
+    <p class="note" style="margin:.3rem 0 0">${mand ? `Mandato ${mand[2] ? 'como titular' : 'como suplente'} de ${fmtData(mand[0])} a ${fmtData(mand[1])}` : 'Sem mandato registrado nesta legislatura'}${v.ativo ? '' : '. Fora do exercício' + (LEG.atual === false ? noFim : ' hoje')}${v.email ? `. <a href="mailto:${esc(v.email)}">${esc(v.email)}</a>` : ''}${v.tel ? '. Tel. ' + esc(v.tel) : ''}</p></div></div>
   <div class="stats">
     ${ANOS.slice(0,2).map(a => `<div class="stat"><h3>Presença em ${a}</h3>${presBox(a + '-01-01', a === ANO ? HOJE : a + '-12-31', a === ANO ? ' até agora' : '')}</div>`).join('')}
     <div class="stat"><h3>Votações nominais</h3><div class="big">${num(minhas.length)}</div>
@@ -847,7 +860,7 @@ function viewPerfil(id){
 function viewSobre(){
   const nNom = Object.keys(NOM).length;
   app.innerHTML = `<div class="prose"><h1>Sobre os dados</h1>
-  <p class="lede">Os dados vêm da API pública do SAPL, o sistema legislativo da Câmara Municipal de Campinas. Foram coletados em ${fmtData(D.gerado.slice(0,10))} e cobrem a legislatura atual, ${PERIODO_TXT}: ${num(VT.length)} votações, ${num(nNom)} delas com o voto de cada vereador, ${comDados.length} sessões com votações ou presença${REU.length ? ` e ${num(REU.length)} reuniões de comissão` : ''}.</p>
+  <p class="lede">Os dados vêm da API pública do SAPL, o sistema legislativo da Câmara Municipal de Campinas. Foram coletados em ${fmtData(D.gerado.slice(0,10))} e cobrem a ${LEG.n ? LEG.n + 'ª legislatura' : 'legislatura atual'}${LEG.atual === false ? ' (encerrada)' : ''}, ${PERIODO_TXT}: ${num(VT.length)} votações, ${num(nNom)} delas com o voto de cada vereador, ${comDados.length} sessões com votações ou presença${REU.length ? ` e ${num(REU.length)} reuniões de comissão` : ''}.</p>
   <h2>O que é confiável</h2>
   <p>O resultado de cada votação e a data da sessão. A data vem da sessão plenária, porque a data gravada em cada votação reflete quando o registro foi lançado no sistema.</p>
   <p>O voto de cada vereador nas votações nominais. Nos casos verificados, a soma dos votos individuais bate com o placar oficial em praticamente todas as votações.</p>
