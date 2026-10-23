@@ -1,0 +1,38 @@
+name: Coletar legislatura anterior
+
+on:
+  workflow_dispatch:
+    inputs:
+      legislatura:
+        description: 'Número da legislatura (ex.: 18)'
+        required: true
+        default: '18'
+
+permissions:
+  contents: write
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependências
+        run: pip install requests pillow
+      - name: Coletar e gerar a página
+        env:
+          LEG: ${{ inputs.legislatura }}
+        run: python coletar.py --leg "$LEG"
+      - name: Salvar no repositório
+        env:
+          LEG: ${{ inputs.legislatura }}
+        run: |
+          git config user.name "xereta-bot"
+          git config user.email "xereta-bot@users.noreply.github.com"
+          git add "leg-${LEG}.html" cache_materias.json
+          git commit -m "Adiciona legislatura ${LEG}" || exit 0
+          git pull --rebase
+          git push
