@@ -152,7 +152,8 @@ def coletar(leg_num=None):
     log('matérias')
     R['tipos_materia'] = {x['id']: dict(sigla=x['sigla'], desc=x['descricao']) for x in todos('/materia/tipomaterialegislativa/')}
     nominais = {v for v, p, c in R['votos'] if c in 'SNA'}
-    mats = {v['m'] for v in R['votacoes'] if v['id'] in nominais} | {r['m'] for r in R['relatorias']}
+    # ementa de todas as matérias votadas (não só as nominais), para a busca por palavra funcionar em tudo
+    mats = {v['m'] for v in R['votacoes']} | {r['m'] for r in R['relatorias']}
     cache = carregar_cache()
     faltam = [m for m in mats if str(m) not in cache]
     log(f'{len(mats)} matérias, {len(faltam)} novas')

@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Xereta – de olho nos vereadores de Campinas</title>
-<meta name="description" content="Xereta: de olho nos vereadores de Campinas. Veja o que foi votado em cada sessão, quem esteve presente e quem faz parte de cada comissão.">
+<title>Xereta – De olho nos vereadores de Campinas</title>
+<meta name="description" content="Xereta: De olho nos vereadores de Campinas. Veja o que foi votado em cada sessão, quem esteve presente e quem faz parte de cada comissão.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,700;1,400&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme: light;
-  --bg:#fbfaff; --surface:#ffffff; --soft:#f1eff8; --ink:#1d1a2e; --muted:#5b5870; --line:#e1deec;
-  --mc-azul:#1858d9; --mc-rosa:#d96ab2; --mc-amarelo:#d9b70d; --mc-verde:#03a62c; --mc-laranja:#f2442b;
-  --accent:#4d3b8c; --accent-soft:#ebe7f6; --accent-ink:#ffffff; --focus:#4d3b8c;
-  --sim:#1d7656; --nao:#c03e2a; --abs:#a8700f; --aus:#b8c0c8; --pres:#5a6a8b;
-  --ok-bg:#e0f0e8; --ok-ink:#145a41; --bad-bg:#f7e2de; --bad-ink:#8c2a1b; --neu-bg:#e9edf0; --neu-ink:#46535f; --warn-bg:#f5ebd6; --warn-ink:#6f4a0f;
-  --display:"Montserrat","Segoe UI",system-ui,sans-serif;
+  --bg:#fdf9f3; --surface:#ffffff; --soft:#f3ece3; --ink:#4d3f36; --muted:#6f6055; --line:#e4d9cc;
+  --p1:#7a4eb6; --p2:#f9992a; --p3:#c5fc1d; --p4:#f32b0a; --p5:#4d3f36;
+  --accent:#7a4eb6; --accent-soft:#efe8f8; --accent-ink:#ffffff; --focus:#7a4eb6;
+  --sim:#c5fc1d; --nao:#f32b0a; --abs:#f9992a; --aus:#d4c8bb; --pres:#8c7b6e;
+  --ok-bg:#eafcb5; --ok-ink:#3f5400; --bad-bg:#fde1db; --bad-ink:#9d1a05; --neu-bg:#efe7de; --neu-ink:#5d4f45; --warn-bg:#fde9c8; --warn-ink:#6b3d00;
+  --display:"Pixelify Sans","Segoe UI",system-ui,sans-serif;
   --body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
   --r:20px;
   box-sizing:border-box;
@@ -28,18 +28,18 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme: dark;
-    --bg:#14111f; --surface:#1e1a2e; --soft:#272238; --ink:#ece9f7; --muted:#b0abc6; --line:#342e4a;
-    --accent:#b9a9f5; --accent-soft:#2c2548; --accent-ink:#14111f; --focus:#cfc3ff;
-    --sim:#43b98e; --nao:#f07360; --abs:#e2ac44; --aus:#425062; --pres:#93a3c3;
-    --ok-bg:#173c2f; --ok-ink:#95e3c3; --bad-bg:#45221c; --bad-ink:#ffb8aa; --neu-bg:#243344; --neu-ink:#bcc8d4; --warn-bg:#3e3119; --warn-ink:#f3d18b;
+    --bg:#1d1815; --surface:#2a231f; --soft:#342b26; --ink:#f4ece4; --muted:#c0b2a5; --line:#46392f;
+    --accent:#b79bf0; --accent-soft:#3a2c55; --accent-ink:#1d1815; --focus:#d6c5ff;
+    --sim:#c5fc1d; --nao:#ff5236; --abs:#f9992a; --aus:#5b4d42; --pres:#b39bd8;
+    --ok-bg:#2f3a0e; --ok-ink:#d9ff7a; --bad-bg:#4a1c14; --bad-ink:#ffb9aa; --neu-bg:#3a3029; --neu-ink:#d6c9bd; --warn-bg:#4a3414; --warn-ink:#ffd08a;
   }
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --bg:#14111f; --surface:#1e1a2e; --soft:#272238; --ink:#ece9f7; --muted:#b0abc6; --line:#342e4a;
-  --accent:#b9a9f5; --accent-soft:#2c2548; --accent-ink:#14111f; --focus:#cfc3ff;
-  --sim:#43b98e; --nao:#f07360; --abs:#e2ac44; --aus:#425062; --pres:#93a3c3;
-  --ok-bg:#173c2f; --ok-ink:#95e3c3; --bad-bg:#45221c; --bad-ink:#ffb8aa; --neu-bg:#243344; --neu-ink:#bcc8d4; --warn-bg:#3e3119; --warn-ink:#f3d18b;
+  --bg:#1d1815; --surface:#2a231f; --soft:#342b26; --ink:#f4ece4; --muted:#c0b2a5; --line:#46392f;
+  --accent:#b79bf0; --accent-soft:#3a2c55; --accent-ink:#1d1815; --focus:#d6c5ff;
+  --sim:#c5fc1d; --nao:#ff5236; --abs:#f9992a; --aus:#5b4d42; --pres:#b39bd8;
+  --ok-bg:#2f3a0e; --ok-ink:#d9ff7a; --bad-bg:#4a1c14; --bad-ink:#ffb9aa; --neu-bg:#3a3029; --neu-ink:#d6c9bd; --warn-bg:#4a3414; --warn-ink:#ffd08a;
 }
 html{font-size:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5rem);-webkit-text-size-adjust:100%}
 html[data-texto="1"]{font-size:112.5%}
@@ -57,7 +57,7 @@ img{max-width:100%}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* topo */
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-top:6px;background:linear-gradient(90deg,var(--mc-azul) 0 25%,var(--mc-rosa) 25% 50%,var(--mc-amarelo) 50% 75%,var(--mc-verde) 75% 100%) top/100% 6px no-repeat,var(--surface);border-bottom:1px solid var(--line)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
 .bar1{display:flex;align-items:center;gap:1rem;min-height:3.75rem}
 .brand{white-space:nowrap;font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.6rem;margin-right:auto}
 .brand .mark{display:grid;grid-template-columns:repeat(3,.45rem);gap:2px}
@@ -67,6 +67,24 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-to
 @media (max-width:360px){.brandtxt small{display:none}}
 .legsel{flex:none;min-height:2.75rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;padding:0 .9rem;margin-right:.35rem;cursor:pointer}
 .histbar{background:var(--warn-bg);color:var(--warn-ink);padding:.65rem 0;font-weight:700;font-size:.95rem}
+.gchart{margin:1.5rem 0 1.25rem;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem}
+.gchart h2{font-size:1.2rem}
+.glegend{display:flex;gap:1rem;font-size:.85rem;color:var(--muted);margin:0 0 .5rem}
+.glegend span{display:inline-flex;align-items:center;gap:.4rem}
+.glegend i{width:.9rem;height:.9rem;border-radius:4px;display:inline-block}
+.gscroll{overflow-x:auto;padding-bottom:.3rem}
+.gcols{display:grid;grid-template-columns:repeat(var(--n),minmax(1.7rem,1fr));gap:2px;min-width:max-content;width:100%}
+.gcol{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:.4rem .15rem .3rem;border:0;border-radius:8px;background:none;cursor:pointer;user-select:none;-webkit-user-select:none;min-width:0}
+.gcol:hover{background:var(--soft)}
+.gcol.sel{background:var(--accent-soft)}
+.gb{display:flex;flex-direction:column;width:100%;max-width:1.5rem;height:11rem;border-radius:6px;overflow:hidden}
+.gb i{display:block;width:100%}
+.gb .au{background:var(--nao)}
+.gb .pr{background:var(--sim)}
+.gcol .gl{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.78rem;font-weight:700;color:var(--muted);white-space:nowrap;height:2.9rem}
+.gchart.has-sel .gcol:not(.sel){opacity:.5}
+.gsum{margin-top:.8rem}
+.gsum p{margin:.2rem 0 .7rem}
 .tools{display:flex;gap:.4rem}
 .tool{min-width:2.75rem;height:2.75rem;padding:0 .7rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:.35rem}
 .tool svg{width:1.15rem;height:1.15rem}
@@ -99,10 +117,10 @@ h3{font-size:1.15rem;font-weight:600}
 .path .ico svg{width:1.4rem;height:1.4rem}
 .path strong{font-family:var(--display);font-size:1.45rem;font-weight:800;letter-spacing:-.01em}
 .path span{color:var(--muted)}
-.path:nth-child(4n+1) .ico{background:var(--mc-azul);color:#fff}
-.path:nth-child(4n+2) .ico{background:var(--mc-rosa);color:#1d1a2e}
-.path:nth-child(4n+3) .ico{background:var(--mc-amarelo);color:#1d1a2e}
-.path:nth-child(4n+4) .ico{background:var(--mc-verde);color:#fff}
+.path:nth-child(4n+1) .ico{background:var(--p1);color:#fff}
+.path:nth-child(4n+2) .ico{background:var(--p2);color:#4d3f36}
+.path:nth-child(4n+3) .ico{background:var(--p3);color:#4d3f36}
+.path:nth-child(4n+4) .ico{background:var(--p4);color:#fff}
 @media (max-width:560px){.paths{gap:.6rem;margin-top:1.6rem}.path{display:grid;grid-template-columns:auto 1fr;column-gap:1rem;row-gap:.1rem;min-height:0;padding:1rem 1.1rem}.path .ico{grid-row:1 / span 2;margin:0;align-self:center}.path strong{font-size:1.25rem}.path span:not(.ico){font-size:.95rem}}
 .cal abbr{text-decoration:none}
 .faces{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.25rem,1fr));gap:.4rem}
@@ -328,6 +346,59 @@ details.cat.reu > summary{display:grid;grid-template-columns:auto 1fr auto;gap:.
 .mlist li{background:var(--bg);border-radius:10px;padding:.65rem .8rem}
 .mlist li strong{display:block;font-size:.95rem}
 .mlist li span{font-size:.9rem;color:var(--muted)}
+
+/* ===== tema gamer / pixel ===== */
+:root{--bd:var(--ink);--sh:var(--ink);--r:0px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sh:var(--p2)}}
+:root[data-theme="dark"]{--sh:var(--p2)}
+body{background-image:radial-gradient(var(--line) 1.4px,transparent 1.5px);background-size:22px 22px}
+h1,h2,h3{letter-spacing:0;font-weight:700}
+:focus-visible{border-radius:0}
+header.top{border-bottom:3px solid var(--bd)}
+footer{border-top:3px solid var(--bd)}
+.brand{font-size:1.55rem;letter-spacing:0}
+.brand .logo{width:2.9rem;height:2.9rem;padding:2px;object-fit:contain;image-rendering:pixelated;border-radius:0;border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);background:#fff7e8}
+@media (max-width:480px){.brand{font-size:21px}.brand .logo{width:40px;height:40px}}
+.histbar{border-bottom:2px solid var(--bd)}
+/* caixas com sombra dura */
+.path,.latest,.cal,.sitem,.vote,details.cat,.plist,.stat,.tablewrap,.com,.gchart,.callout{border:2px solid var(--bd);border-radius:0;box-shadow:4px 4px 0 var(--sh)}
+.empty{border:2px dashed var(--bd);border-radius:0}
+.path,.sitem,.com,.btn,.tool,.cal-nav,.chip{transition:transform .08s,box-shadow .08s}
+.path:hover,.sitem:hover,a.com:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sh)}
+.path .ico{border-radius:0;border:2px solid var(--bd)}
+/* botões */
+.btn,.btn.ghost{border:2px solid var(--bd);border-radius:0;box-shadow:4px 4px 0 var(--sh);font-weight:700}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--sh)}
+.btn:active,.tool:active,.cal-nav:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--sh)}
+.tool,.cal-nav,.legsel{border:2px solid var(--bd);border-radius:0;box-shadow:3px 3px 0 var(--sh)}
+.chip{border:2px solid var(--bd);border-radius:0;box-shadow:2px 2px 0 var(--sh);font-weight:700}
+.chip[aria-pressed="true"]{background:var(--p2);color:var(--p5);border-color:var(--bd);transform:translate(2px,2px);box-shadow:none}
+nav.tabs a{border:2px solid transparent;border-radius:0}
+nav.tabs a[aria-current="page"]{border-color:var(--bd);box-shadow:3px 3px 0 var(--sh)}
+.seg,.segnav{border:2px solid var(--bd);border-radius:0;background:var(--surface)}
+.seg button,.segnav a{border-radius:0}
+select,input[type=search],input[type=date]{border:2px solid var(--bd);border-radius:0;box-shadow:3px 3px 0 var(--sh)}
+.day,button.day{border-radius:0}
+.cal-legend i{border-radius:0}
+/* fotos e avatares */
+.av{border-radius:0;border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh)}
+.av.sm{border-width:2px;box-shadow:2px 2px 0 var(--sh)}
+.face,.person{border-radius:0}
+/* barras, selos e marcadores */
+.badge,.voto-tag{border-radius:0}
+.badge{border:2px solid var(--bd)}
+.voto-tag::before,.v,.v.N::after,.v.P,.strip .v{border-radius:0}
+.voto-tag::before{box-sizing:border-box;border:2px solid var(--bd)}
+.v{box-shadow:inset 0 0 0 1px var(--bd)}
+.glegend i,.cal-legend i{border:2px solid var(--bd);box-sizing:border-box}
+.day.today::after{background:var(--p2)}
+.meter,.hbar,.vbar .track{border:2px solid var(--bd);border-radius:0}
+.meter{height:.85rem}.hbar{height:.95rem}.vbar .track{height:.75rem}
+.meter i{border-radius:0}
+.gb{border:2px solid var(--bd);border-radius:0}
+.gcol{border-radius:0}
+.gcol.sel{outline:2px solid var(--bd)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -335,7 +406,7 @@ details.cat.reu > summary{display:grid;grid-template-columns:auto 1fr auto;gap:.
 <header class="top">
   <div class="wrap">
     <div class="bar1">
-      <a class="brand" href="#inicio"><img class="logo" src="logo.png" alt="" width="44" height="44"><span class="brandtxt">Xereta<small>de olho nos vereadores de Campinas</small></span></a>
+      <a class="brand" href="#inicio"><img class="logo" src="logo.png" alt="" width="44" height="44"><span class="brandtxt">Xereta<small>De olho nos vereadores de Campinas</small></span></a>
       <div class="tools">
         <button class="tool" id="btnTexto" type="button" aria-label="Aumentar o tamanho do texto">A<span aria-hidden="true" style="font-size:.8em">+</span></button>
         <button class="tool" id="btnTema" type="button" aria-label="Alternar tema claro ou escuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
@@ -352,7 +423,7 @@ details.cat.reu > summary{display:grid;grid-template-columns:auto 1fr auto;gap:.
   </div>
 </header>
 <main class="wrap" id="app" tabindex="-1"></main>
-<footer><div class="wrap">Protótipo independente feito com dados públicos do SAPL da Câmara Municipal de Campinas, atualizados automaticamente todos os dias. Última atualização: <span id="gerado"></span>. Não é um canal oficial da Câmara.</div></footer>
+<footer><div class="wrap">Iniciativa da Minha Campinas, idealizada por Marcelo Nisida. Feito com dados públicos do SAPL da Câmara Municipal de Campinas, atualizados automaticamente todos os dias. Última atualização: <span id="gerado"></span>. Não é um canal oficial da Câmara.</div></footer>
 <script type="application/json" id="data">__DATA__</script>
 <script>
 (function(){
@@ -388,7 +459,7 @@ const noFim = LEG.atual === false ? ' no fim da legislatura' : '';
 if (LEG.atual === false) app.insertAdjacentHTML('beforebegin', `<div class="histbar"><div class="wrap">Você está vendo a ${LEG.n}ª legislatura (${LEG.ini.slice(0,4)}–${LEG.fim.slice(0,4)}), já encerrada. Estes dados não são mais atualizados.</div></div>`);
 fetch('legislaturas.json').then(r => r.ok ? r.json() : Promise.reject()).then(L => {
   if (!Array.isArray(L) || L.length < 2) return;
-  const sel = L.map(x => `<option value="${esc(x.url)}"${x.n === LEG.n ? ' selected' : ''}>${x.n}ª · ${esc(x.periodo)}</option>`).join('');
+  const sel = L.map(x => `<option value="${esc(x.url)}"${x.n === LEG.n ? ' selected' : ''}>${esc(x.periodo)}</option>`).join('');
   document.querySelector('nav.tabs').insertAdjacentHTML('afterbegin', `<select class="legsel" id="selLeg" aria-label="Legislatura">${sel}</select>`);
   document.getElementById('selLeg').addEventListener('change', e => { location.href = e.target.value + '#inicio'; });
 }).catch(() => {});
@@ -591,12 +662,67 @@ function viewVotacoes(){
   app.innerHTML = `<h1>Sessões e votações</h1>
   <p class="lede">Escolha um dia no calendário para ver o que foi votado e quem estava presente.</p>
   ${segVot('s')}
+  <section class="gchart" id="gchart" role="group" aria-labelledby="h-g"></section>
   <div class="sessions"><div class="cal" id="cal"></div><div><h2 class="sr">Sessões</h2><div class="slist" id="slist" aria-live="polite"></div></div></div>`;
+  graficoPresenca();
   calendario(document.getElementById('cal'), {lista: (L, filtrado, limpar) => {
     const el = document.getElementById('slist');
     el.innerHTML = (filtrado ? `<button class="btn ghost" id="todas" type="button">Mostrar todas as sessões do mês</button>` : '') + L.slice().sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id).map(itemSessao).join('');
     el.querySelector('#todas')?.addEventListener('click', limpar);
   }});
+}
+
+/* ---------- Votações: gráfico de presença ---------- */
+const CADEIRAS = 33; // a Câmara de Campinas tem 33 vereadores; titular e suplente não ocupam duas cadeiras ao mesmo tempo
+const esperadosEm = d => D.V.filter(v => v.mand && v.mand[0] <= d && (!v.mand[1] || v.mand[1] >= d)).length;
+function graficoPresenca(){
+  const box = document.getElementById('gchart'); if (!box) return;
+  const L = comDados.filter(s => PRES[s.id]).slice(-20).map(s => {
+    const esp = Math.min(esperadosEm(s.d) || CADEIRAS, CADEIRAS); const n = Math.min(PRES[s.id].size, esp);
+    const p = esp ? Math.round(100 * n / esp) : 0;
+    return {s, n, esp, p, a: 100 - p};
+  });
+  if (L.length < 2) { box.remove(); return; }
+  const lblCurto = s => s.d.slice(8) + '/' + s.d.slice(5, 7) + (/^extra/i.test(s.t) ? '*' : '');
+  const txt = x => `${x.n} presentes (${x.p}%) e ${x.esp - x.n} ausentes (${x.a}%)`;
+  box.innerHTML = `<h2 id="h-g">Presença nas últimas ${L.length} sessões</h2>
+    <p class="note" style="margin:.3rem 0 .7rem">Cada coluna é uma sessão e soma 100%. Ausente quer dizer sem registro de presença, o que pode incluir licenças. O asterisco marca sessão extraordinária. Toque em duas colunas para escolher um período, ou arraste.</p>
+    <div class="glegend" aria-hidden="true"><span><i style="background:var(--sim)"></i>Presentes</span><span><i style="background:var(--nao)"></i>Ausentes</span></div>
+    <div class="gscroll"><div class="gcols" style="--n:${L.length}">${L.map((x, i) => `<button type="button" class="gcol" data-i="${i}" aria-pressed="false" title="${fmtData(x.s.d)}: ${txt(x)}" aria-label="${esc(sessNome(x.s))}, ${fmtData(x.s.d)}: ${txt(x)}"><span class="gb" aria-hidden="true"><i class="au" style="height:${x.a}%"></i><i class="pr" style="height:${x.p}%"></i></span><span class="gl" aria-hidden="true">${lblCurto(x.s)}</span></button>`).join('')}</div></div>
+    <div class="gsum" id="gsum" aria-live="polite"></div>`;
+  const sc = box.querySelector('.gscroll'); sc.scrollLeft = sc.scrollWidth;
+  const rows = [...box.querySelectorAll('.gcol')];
+  const S = {a:null, b:null, done:false};
+  const pintar = () => {
+    const f = S.a === null ? null : [Math.min(S.a, S.b), Math.max(S.a, S.b)];
+    rows.forEach((r, i) => { const on = !!f && i >= f[0] && i <= f[1]; r.classList.toggle('sel', on); r.setAttribute('aria-pressed', on); });
+    box.classList.toggle('has-sel', !!f);
+    const el = box.querySelector('#gsum');
+    if (!f) { el.innerHTML = ''; return; }
+    const sel = L.slice(f[0], f[1] + 1);
+    const media = Math.round(sel.reduce((a, x) => a + x.p, 0) / sel.length);
+    const maior = sel.reduce((a, x) => x.p > a.p ? x : a), menor = sel.reduce((a, x) => x.p < a.p ? x : a);
+    const de = sel[0].s.d, ate = sel[sel.length - 1].s.d;
+    el.innerHTML = `<p><strong>${sel.length} ${sel.length === 1 ? 'sessão' : 'sessões'}, de ${fmtData(de)} a ${fmtData(ate)}.</strong> Presença média de ${media}% e ausência média de ${100 - media}%${sel.length > 1 ? `. Maior presença: ${maior.p}% (${fmtCurta(maior.s.d)}). Menor: ${menor.p}% (${fmtCurta(menor.s.d)})` : ''}.${S.done ? '' : ' Toque em outra coluna para ampliar o período.'}</p>
+      <div class="linkrow"><button class="btn" id="gver" type="button">Ver as votações desse período</button><button class="btn ghost" id="glimpar" type="button">Limpar seleção</button></div>`;
+    el.querySelector('#gver').addEventListener('click', () => { FB.p = ''; FB.de = de; FB.ate = ate; location.hash = 'busca'; });
+    el.querySelector('#glimpar').addEventListener('click', () => { S.a = S.b = null; S.done = false; pintar(); });
+  };
+  let down = null, drag = false, suprimir = false;
+  rows.forEach((r, i) => {
+    r.addEventListener('mousedown', e => { if (e.button === 0) down = i; });
+    r.addEventListener('mouseenter', e => { if (down !== null && e.buttons === 1 && (drag || i !== down)) { drag = true; S.a = down; S.b = i; S.done = false; pintar(); } });
+    r.addEventListener('click', () => {
+      if (suprimir) { suprimir = false; return; }
+      if (S.a === null || S.done) { S.a = S.b = i; S.done = false; } else { S.b = i; S.done = true; }
+      pintar();
+    });
+  });
+  box.addEventListener('mouseup', e => {
+    if (drag) { S.done = true; suprimir = e.target.closest('.gcol') === rows[down]; pintar(); }
+    drag = false; down = null;
+  });
+  box.addEventListener('mouseleave', () => { if (drag) { S.done = true; pintar(); } drag = false; down = null; });
 }
 
 /* ---------- Votações: busca com período ---------- */
@@ -605,7 +731,7 @@ function viewBusca(){
   app.innerHTML = `<h1>Todas as votações</h1>
   <p class="lede">Filtre por período, tipo de proposta e resultado.</p>
   ${segVot('b')}
-  <div class="frow" style="margin-top:1rem"><label style="flex:1 1 20rem"><span class="sr">Buscar</span><input id="bq" type="search" placeholder="Buscar por número, tipo ou palavra da ementa" value="${esc(FB.q)}"></label>${btnFiltros('bf')}</div>
+  <div class="frow" style="margin-top:1rem"><label style="flex:1 1 20rem"><span class="sr">Buscar</span><input id="bq" type="search" placeholder="Buscar por palavra da ementa, número ou autor" value="${esc(FB.q)}"></label>${btnFiltros('bf')}</div>
   <div class="filters closed" id="bf">
     ${blocoPeriodo('bper', FB)}
     <div class="frow" id="bcat"><span class="flabel">Tipo</span>${chips('Tipo de proposta', [['proj','Projetos e emendas'],['req','Requerimentos'],['moc','Moções'],['ata','Atas e outros'],['todos','Todos']], FB.cat)}</div>
@@ -628,13 +754,15 @@ function viewBusca(){
 }
 const passaCat = (v, c) => c === 'todos' || (c === 'ata' ? ['ata','out'].includes(v.cat) : v.cat === c);
 const passaRes = (v, r) => r === 'todos' || RESG[r].includes(v.res);
+const termosBusca = q => norm(q).trim().split(/\s+/).filter(Boolean);
+const bateMat = (lbl, mid, termos) => { if (!termos.length) return true; const mat = D.MAT[mid]; const hay = norm((lbl || '') + ' ' + (mat ? mat[3] + ' ' + (mat[4] || []).join(' ') : '')); return termos.every(t => hay.includes(t)); };
+const campoBusca = (id, valor) => `<div class="frow"><label style="flex:1 1 20rem"><span class="sr">Buscar por palavra da ementa, número ou autor</span><input id="${id}" type="search" placeholder="Buscar por palavra da ementa, número ou autor" value="${esc(valor)}"></label></div>`;
 function renderBusca(){
-  const q = norm(FB.q).trim();
-  let r = VT.filter(v => v.d >= FB.de && v.d <= FB.ate && passaCat(v, FB.cat) && passaRes(v, FB.res) && (!FB.nominal || NOM[v.id]) &&
-    (!q || (() => { const mat = D.MAT[v.m]; const hay = norm(v.lbl + ' ' + (mat ? mat[3] + ' ' + mat[4].join(' ') : '')); return q.split(/\s+/).every(t => hay.includes(t)); })()));
+  const termos = termosBusca(FB.q);
+  let r = VT.filter(v => v.d >= FB.de && v.d <= FB.ate && passaCat(v, FB.cat) && passaRes(v, FB.res) && (!FB.nominal || NOM[v.id]) && bateMat(v.lbl, v.m, termos));
   const contra = v => NOM[v.id] ? contagem(NOM[v.id]).N : -1;
   r.sort((a,b) => FB.ordem === 'ant' ? a.d.localeCompare(b.d) || a.id - b.id : FB.ordem === 'div' ? contra(b) - contra(a) || b.d.localeCompare(a.d) : b.d.localeCompare(a.d) || b.id - a.id);
-  document.getElementById('count').textContent = `${num(r.length)} ${r.length === 1 ? 'votação' : 'votações'} de ${fmtData(FB.de)} a ${fmtData(FB.ate)}` + (FB.q && !FB.nominal ? '. A busca por palavra só alcança a ementa das votações nominais.' : '');
+  document.getElementById('count').textContent = `${num(r.length)} ${r.length === 1 ? 'votação' : 'votações'} de ${fmtData(FB.de)} a ${fmtData(FB.ate)}` + (FB.q && VT.some(v => !D.MAT[v.m]) ? '. Em algumas votações a ementa não está nos dados, e a busca olha só o título.' : '');
   const el = document.getElementById('lista');
   if (!r.length) { el.innerHTML = `<div class="empty">Nenhuma votação com esses filtros. Amplie o período ou escolha outro tipo.</div>`; return; }
   el.innerHTML = r.slice(0, FB.limite).map(v => voteItem(v, `${fmtData(v.d)}${D.MAT[v.m] ? '. ' + esc((D.MAT[v.m][3]||'').slice(0,120)) + ((D.MAT[v.m][3]||'').length > 120 ? '…' : '') : ''}`)).join('') +
@@ -643,7 +771,7 @@ function renderBusca(){
 }
 
 /* ---------- Página da sessão ---------- */
-const FS = {res:'todos', cat:'todos'};
+const FS = {res:'todos', cat:'todos', q:''};
 function viewSessao(id){
   const s = Sid[id];
   if (!s) { app.innerHTML = `<a class="back" href="#votacoes">‹ Todas as sessões</a><div class="empty">Sessão não encontrada nos dados ${PERIODO_TXT}.</div>`; return; }
@@ -670,6 +798,7 @@ function viewSessao(id){
   if (!vs.length) h += `<div class="section"><div class="empty">${s.t === 'Solene' ? 'Sessões solenes são homenagens e não têm votações nem lista de presença.' : 'Não há votações registradas para esta sessão.'}</div></div>`;
   else h += `<section class="section" aria-labelledby="h-vot"><h2 id="h-vot">Votações</h2>
     <div class="filters">
+      ${campoBusca('sq', FS.q)}
       <div class="frow" id="sres"><span class="flabel">Resultado</span>${chips('Resultado', [['todos','Todos'],['aprov','Aprovados'],['nao','Não aprovados'],['nv','Não votados']], FS.res)}</div>
       <div class="frow" id="scat"><span class="flabel">Tipo</span>${chips('Tipo de proposta', [['todos','Todos'],['proj','Projetos e emendas'],['req','Requerimentos'],['moc','Moções'],['ata','Atas e outros']], FS.cat)}</div>
     </div><div id="svot" aria-live="polite"></div></section>`;
@@ -681,7 +810,8 @@ function viewSessao(id){
   tb.addEventListener('click', () => { const ab = cb.classList.toggle('hidden') === false; tb.setAttribute('aria-expanded', ab); if (ab && !cb.dataset.ok) { calendario(cb, {picker:true}); cb.dataset.ok = 1; } });
   if (!vs.length) return;
   const render = () => {
-    const L = vs.filter(v => passaRes(v, FS.res) && passaCat(v, FS.cat));
+    const termos = termosBusca(FS.q);
+    const L = vs.filter(v => passaRes(v, FS.res) && passaCat(v, FS.cat) && bateMat(v.lbl, v.m, termos));
     const nom = L.filter(v => NOM[v.id]); const outras = L.filter(v => !NOM[v.id]);
     let x = '';
     if (!L.length) x = `<div class="empty">Nenhuma votação desta sessão com esses filtros.</div>`;
@@ -691,11 +821,12 @@ function viewSessao(id){
       ['proj','req','moc','ata'].forEach(c => {
         const G = outras.filter(v => passaCat(v, c)); if (!G.length) return;
         const ap = G.filter(v => RESG.aprov.includes(v.res)).length;
-        x += `<details class="cat" ${FS.cat !== 'todos' ? 'open' : ''}><summary><span>${CAT[c]} <span class="cnt">${G.length} ${G.length>1?'itens':'item'}, ${ap} ${ap===1?'aprovado':'aprovados'}</span></span>${CHEV}</summary><div class="inner">${G.map(v => voteItem(v)).join('')}</div></details>`;
+        x += `<details class="cat" ${FS.cat !== 'todos' || FS.q ? 'open' : ''}><summary><span>${CAT[c]} <span class="cnt">${G.length} ${G.length>1?'itens':'item'}, ${ap} ${ap===1?'aprovado':'aprovados'}</span></span>${CHEV}</summary><div class="inner">${G.map(v => voteItem(v)).join('')}</div></details>`;
       });
     }
     document.getElementById('svot').innerHTML = x;
   };
+  document.getElementById('sq').addEventListener('input', e => { FS.q = e.target.value; render(); });
   ligarChips('#sres', k => { FS.res = k; render(); });
   ligarChips('#scat', k => { FS.cat = k; render(); });
   render();
@@ -761,7 +892,7 @@ function viewComissoes(){
   document.getElementById('cord').addEventListener('change', e => { st.o = e.target.value; render(); });
   render();
 }
-const FC = {p:'tudo', de:DATA_MIN, ate:HOJE, so:'todas'};
+const FC = {p:'tudo', de:DATA_MIN, ate:HOJE, so:'todas', q:''};
 function viewComissao(cid){
   const c = D.COM[cid]; const ms = (membrosCom[cid] || []).slice().sort((a,b) => pesoCargo(a.cargo)-pesoCargo(b.cargo) || nomeV(a.id).localeCompare(nomeV(b.id),'pt-BR'));
   if (!c) { app.innerHTML = `<a class="back" href="#comissoes">‹ Comissões</a><div class="empty">Comissão não encontrada.</div>`; return; }
@@ -772,22 +903,25 @@ function viewComissao(cid){
     <div class="filters">${blocoPeriodo('cper', FC)}
     <div class="frow" id="cso"><span class="flabel">Mostrar</span>${chips('Mostrar', [['todas','Todas'],['ok','Realizadas'],['canc','Canceladas ou não realizadas'],['ata','Com ata']], FC.so)}</div></div>
     <div class="facts" id="cfacts" style="margin-top:.5rem"></div><div id="creu" style="margin-top:1rem"></div></section>
-  <section class="section" aria-labelledby="h-rel"><h2 id="h-rel">Relatorias</h2><p class="note" style="margin:-.5rem 0 1rem">Projetos que receberam um relator nesta comissão no período escolhido. O relator estuda o projeto e propõe o parecer. A pauta de cada reunião está no PDF, porque o sistema não registra quais projetos foram discutidos em cada uma.</p><div id="crel"></div></section>`;
+  <section class="section" aria-labelledby="h-rel"><h2 id="h-rel">Relatorias</h2><p class="note" style="margin:-.5rem 0 1rem">Projetos que receberam um relator nesta comissão no período escolhido. O relator estuda o projeto e propõe o parecer. A pauta de cada reunião está no PDF, porque o sistema não registra quais projetos foram discutidos em cada uma.</p>${campoBusca('crq', FC.q)}<div id="crel"></div></section>`;
   app.innerHTML = h;
   const render = () => {
     const R = (REUc[cid] || []).filter(r => r.d >= FC.de && r.d <= FC.ate).sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id);
     const F = R.filter(r => FC.so === 'todas' || (FC.so === 'ata' ? r.ata : FC.so === 'ok' ? r.sit === 'ok' : (r.sit === 'canc' || r.sit === 'nr')));
     const nok = R.filter(r => r.sit === 'ok').length, ncanc = R.filter(r => r.sit === 'canc' || r.sit === 'nr').length;
-    const rel = REL.filter(x => x.c === cid && x.ini >= FC.de && x.ini <= FC.ate).sort((a,b) => b.ini.localeCompare(a.ini));
-    document.getElementById('cfacts').innerHTML = `<div class="fact"><b>${R.length}</b><span>reuniões marcadas</span></div><div class="fact"><b>${nok}</b><span>realizadas</span></div><div class="fact"><b>${ncanc}</b><span>canceladas ou não realizadas</span></div><div class="fact"><b>${R.filter(r => r.ata).length}</b><span>com ata publicada</span></div><div class="fact"><b>${rel.length}</b><span>projetos com relator</span></div>`;
+    const relBase = REL.filter(x => x.c === cid && x.ini >= FC.de && x.ini <= FC.ate).sort((a,b) => b.ini.localeCompare(a.ini));
+    const termosR = termosBusca(FC.q);
+    const rel = relBase.filter(x => bateMat(matRot(x.m), x.m, termosR));
+    document.getElementById('cfacts').innerHTML = `<div class="fact"><b>${R.length}</b><span>reuniões marcadas</span></div><div class="fact"><b>${nok}</b><span>realizadas</span></div><div class="fact"><b>${ncanc}</b><span>canceladas ou não realizadas</span></div><div class="fact"><b>${R.filter(r => r.ata).length}</b><span>com ata publicada</span></div><div class="fact"><b>${relBase.length}</b><span>projetos com relator</span></div>`;
     document.getElementById('creu').innerHTML = F.length ? F.map(r => { const pm = [];
       return `<details class="cat reu"><summary><span class="rdate"><b>${dt(r.d).getDate()}</b><small>${dt(r.d).toLocaleDateString('pt-BR',{month:'short',year:'2-digit'}).replace('.','')}</small></span><span class="rinfo"><strong>${esc((r.nome || (r.n ? r.n + 'ª reunião' : 'Reunião')).replace(/\s*[-–]\s*cancelada\s*$/i,''))}</strong><span>${esc(r.tema ? r.tema.slice(0,110) + (r.tema.length > 110 ? '…' : '') : diaSemana(r.d))}</span></span><span style="display:flex;align-items:center;gap:.5rem"><span class="badge ${r.sit==='ok'?'b1':r.sit==='ag'?'b3':'b2'}">${SIT[r.sit]}</span>${CHEV}</span></summary>
       <div class="inner">${r.tema && r.tema.length > 110 ? `<p>${esc(r.tema)}</p>` : ''}<p class="note">${fmtData(r.d)}${r.hi ? `, das ${r.hi.slice(0,5)}${r.hf ? ' às ' + r.hf.slice(0,5) : ''}` : ''}${r.local ? `. ${esc(r.local)}` : ''}</p>${r.obs ? `<p>${esc(r.obs)}</p>` : ''}
       <div class="links">${r.pauta ? `<a href="${esc(r.pauta)}" target="_blank" rel="noopener">Pauta (PDF)</a>` : ''}${r.ata ? `<a href="${esc(r.ata)}" target="_blank" rel="noopener">Ata (PDF)</a>` : ''}${r.anexo ? `<a href="${esc(r.anexo)}" target="_blank" rel="noopener">Anexo</a>` : ''}${r.video ? `<a href="${esc(r.video)}" target="_blank" rel="noopener">Vídeo</a>` : ''}${r.audio ? `<a href="${esc(r.audio)}" target="_blank" rel="noopener">Áudio</a>` : ''}${!(r.pauta||r.ata||r.video||r.audio) ? '<span class="note">Sem documentos publicados.</span>' : ''}</div>
       ${pm.length ? `<ul class="mlist">${pm.map(mid => `<li><strong><a href="${SAPL}/materia/${mid}" target="_blank" rel="noopener">${esc(matRot(mid))}</a></strong><span>${esc((D.MAT[mid]||[])[3] || '')}</span></li>`).join('')}</ul>` : ''}</div></details>`; }).join('') : `<div class="empty">Nenhuma reunião registrada nesse período com esse filtro.</div>`;
-    document.getElementById('crel').innerHTML = rel.length ? `<div class="tablewrap"><table class="t"><thead><tr><th scope="col">Projeto</th><th scope="col">Relator</th><th scope="col">Designado em</th><th scope="col">Situação</th></tr></thead><tbody>${rel.slice(0,100).map(x => `<tr><td><a href="${SAPL}/materia/${x.m}" target="_blank" rel="noopener">${esc(matRot(x.m))}</a><br><span class="note">${esc(((D.MAT[x.m]||[])[3]||'').slice(0,120))}</span></td><td>${V[x.p] ? `<a href="#v-${x.p}">${esc(nomeV(x.p))}</a>` : 'Parlamentar ' + x.p}</td><td>${fmtCurta(x.ini)} ${x.ini.slice(0,4)}</td><td>${x.fim || x.tfim ? esc(TFIM[x.tfim] ? 'Parecer ' + TFIM[x.tfim].toLowerCase() : 'Encerrada') : 'Em andamento'}</td></tr>`).join('')}</tbody></table></div>${rel.length > 100 ? `<p class="note">Mostrando as 100 mais recentes de ${rel.length}.</p>` : ''}` : `<div class="empty">Nenhuma relatoria registrada nesse período.</div>`;
+    document.getElementById('crel').innerHTML = rel.length ? `<div class="tablewrap"><table class="t"><thead><tr><th scope="col">Projeto</th><th scope="col">Relator</th><th scope="col">Designado em</th><th scope="col">Situação</th></tr></thead><tbody>${rel.slice(0,100).map(x => `<tr><td><a href="${SAPL}/materia/${x.m}" target="_blank" rel="noopener">${esc(matRot(x.m))}</a><br><span class="note">${esc(((D.MAT[x.m]||[])[3]||'').slice(0,120))}</span></td><td>${V[x.p] ? `<a href="#v-${x.p}">${esc(nomeV(x.p))}</a>` : 'Parlamentar ' + x.p}</td><td>${fmtCurta(x.ini)} ${x.ini.slice(0,4)}</td><td>${x.fim || x.tfim ? esc(TFIM[x.tfim] ? 'Parecer ' + TFIM[x.tfim].toLowerCase() : 'Encerrada') : 'Em andamento'}</td></tr>`).join('')}</tbody></table></div>${rel.length > 100 ? `<p class="note">Mostrando as 100 mais recentes de ${rel.length}.</p>` : ''}` : `<div class="empty">Nenhuma relatoria encontrada nesse período e com essa busca.</div>`;
   };
   ligarPeriodo('cper', FC, render);
+  document.getElementById('crq').addEventListener('input', e => { FC.q = e.target.value; render(); });
   ligarChips('#cso', k => { FC.so = k; render(); });
   render();
 }
@@ -812,7 +946,7 @@ function viewVereadores(){
   document.getElementById('vtodos').addEventListener('change', e => { FV.todos = e.target.checked; render(); });
   render();
 }
-const FPV = {p:'tudo', de:DATA_MIN, ate:HOJE, voto:'todos', cat:'todos', div:false};
+const FPV = {p:'tudo', de:DATA_MIN, ate:HOJE, voto:'todos', cat:'todos', div:false, q:''};
 function viewPerfil(id){
   const v = V[id];
   if (!v) { app.innerHTML = `<a class="back" href="#vereadores">‹ Vereadores</a><div class="empty">Não há dados deste parlamentar ${PERIODO_TXT}.</div>`; return; }
@@ -834,22 +968,23 @@ function viewPerfil(id){
       <div class="note" style="margin-top:.4rem">Votou diferente da maioria em ${minhas.filter(ehDiv).length} de ${v.alin[1]} votações.</div></div>
   </div>
   <p class="note">A presença conta só sessões com lista registrada, dentro do período de mandato. Licenças e afastamentos ainda não são descontados.</p>
-  <section class="section" aria-labelledby="h-com"><h2 id="h-com">Comissões</h2>
-  ${coms.length ? `<div class="tablewrap"><table class="t"><thead><tr><th scope="col">Comissão</th><th scope="col">Função</th></tr></thead><tbody>${coms.map(c => `<tr><td><a href="#c-${c.cid}">${esc(c.nome)}</a> <span class="note">${esc(c.sig)}</span></td><td>${cargoTxt(c.cargo, c.tit)}</td></tr>`).join('')}</tbody></table></div>` : `<p class="note">Nenhuma participação ativa em comissão registrada.</p>`}
-  ${relv.length ? `<p class="note" style="margin-top:.8rem">Foi designado relator de ${relv.length} ${relv.length===1?'projeto':'projetos'} em comissões ${PERIODO_TXT}.</p>` : ''}
-  </section>
   <section class="section" aria-labelledby="h-vot"><h2 id="h-vot">Como votou</h2>
-    <div class="filters">${blocoPeriodo('vper', FPV)}
+    <div class="filters">${campoBusca('vqs', FPV.q)}${blocoPeriodo('vper', FPV)}
       <div class="frow" id="vvoto"><span class="flabel">Voto</span>${chips('Voto', [['todos','Todos'],['S','Sim'],['N','Não'],['A','Abstenção'],['F','Ausente']], FPV.voto)}</div>
       <div class="frow" id="vcat"><span class="flabel">Tipo</span>${chips('Tipo de proposta', [['todos','Todos'],['proj','Projetos e emendas'],['req','Requerimentos'],['moc','Moções']], FPV.cat)}</div>
       <label class="check"><input type="checkbox" id="vdiv" ${FPV.div?'checked':''}>Só quando votou diferente da maioria</label>
-    </div>${legenda()}<p class="count" id="vcount" aria-live="polite"></p><div id="pvotos"></div></section>`;
+    </div>${legenda()}<p class="count" id="vcount" aria-live="polite"></p><div id="pvotos"></div></section>
+  <section class="section" aria-labelledby="h-com"><h2 id="h-com">Comissões</h2>
+  ${coms.length ? `<div class="tablewrap"><table class="t"><thead><tr><th scope="col">Comissão</th><th scope="col">Função</th></tr></thead><tbody>${coms.map(c => `<tr><td><a href="#c-${c.cid}">${esc(c.nome)}</a> <span class="note">${esc(c.sig)}</span></td><td>${cargoTxt(c.cargo, c.tit)}</td></tr>`).join('')}</tbody></table></div>` : `<p class="note">Nenhuma participação ativa em comissão registrada.</p>`}
+  ${relv.length ? `<p class="note" style="margin-top:.8rem">Foi designado relator de ${relv.length} ${relv.length===1?'projeto':'projetos'} em comissões ${PERIODO_TXT}.</p>` : ''}
+  </section>`;
   const render = () => {
-    const L = minhas.filter(x => x.d >= FPV.de && x.d <= FPV.ate && (FPV.voto === 'todos' || NOM[x.id][id] === FPV.voto) && passaCat(x, FPV.cat) && (!FPV.div || ehDiv(x))).sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id);
+    const L = minhas.filter(x => x.d >= FPV.de && x.d <= FPV.ate && (FPV.voto === 'todos' || NOM[x.id][id] === FPV.voto) && passaCat(x, FPV.cat) && (!FPV.div || ehDiv(x)) && bateMat(x.lbl, x.m, termosBusca(FPV.q))).sort((a,b) => b.d.localeCompare(a.d) || b.id - a.id);
     document.getElementById('vcount').textContent = `${num(L.length)} ${L.length===1?'votação':'votações'}`;
     document.getElementById('pvotos').innerHTML = L.length ? L.slice(0, 60).map(x => { const k = NOM[x.id][id]; return voteItem(x, `${fmtData(x.d)}. Votou: <span class="voto-tag" style="--c:var(--${VCOR[k]})">${VOTO[k]}</span>`); }).join('') + (L.length > 60 ? `<p class="note">Mostrando as 60 mais recentes. Use o período para ver outras.</p>` : '') : `<div class="empty">Nenhuma votação com esses filtros.</div>`;
   };
   ligarPeriodo('vper', FPV, render);
+  document.getElementById('vqs').addEventListener('input', e => { FPV.q = e.target.value; render(); });
   ligarChips('#vvoto', k => { FPV.voto = k; render(); });
   ligarChips('#vcat', k => { FPV.cat = k; render(); });
   document.getElementById('vdiv').addEventListener('change', e => { FPV.div = e.target.checked; render(); });
@@ -861,6 +996,9 @@ function viewSobre(){
   const nNom = Object.keys(NOM).length;
   app.innerHTML = `<div class="prose"><h1>Sobre os dados</h1>
   <p class="lede">Os dados vêm da API pública do SAPL, o sistema legislativo da Câmara Municipal de Campinas. Foram coletados em ${fmtData(D.gerado.slice(0,10))} e cobrem a ${LEG.n ? LEG.n + 'ª legislatura' : 'legislatura atual'}${LEG.atual === false ? ' (encerrada)' : ''}, ${PERIODO_TXT}: ${num(VT.length)} votações, ${num(nNom)} delas com o voto de cada vereador, ${comDados.length} sessões com votações ou presença${REU.length ? ` e ${num(REU.length)} reuniões de comissão` : ''}.</p>
+  <h2>Quem faz o Xereta</h2>
+  <p>O Xereta é uma iniciativa da <strong>Minha Campinas</strong>, organização que trabalha para promover a participação política popular em Campinas e para que a política funcione para quem mais precisa. Entre os princípios da Minha Campinas estão a transparência, o diálogo e o apartidarismo.</p>
+  <p>O app foi idealizado por <strong>Marcelo Nisida</strong>, com uma ideia simples: facilitar para qualquer pessoa acompanhar o que os vereadores votam, quem comparece às sessões e como cada um atua nas comissões, usando apenas dados públicos. O Xereta é independente. Não é um canal oficial da Câmara Municipal e não tem ligação com partidos.</p>
   <h2>O que é confiável</h2>
   <p>O resultado de cada votação e a data da sessão. A data vem da sessão plenária, porque a data gravada em cada votação reflete quando o registro foi lançado no sistema.</p>
   <p>O voto de cada vereador nas votações nominais. Nos casos verificados, a soma dos votos individuais bate com o placar oficial em praticamente todas as votações.</p>
