@@ -3,20 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Plenário Aberto – Câmara Municipal de Campinas</title>
+<title>Xereta – de olho nos vereadores de Campinas</title>
+<meta name="description" content="Xereta: de olho nos vereadores de Campinas. Veja o que foi votado em cada sessão, quem esteve presente e quem faz parte de cada comissão.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme: light;
-  --bg:#f7f8f9; --surface:#ffffff; --soft:#eef1f4; --ink:#14243a; --muted:#53616f; --line:#dde2e7;
-  --accent:#1a5480; --accent-soft:#e3edf5; --accent-ink:#ffffff; --focus:#1f78c1;
+  --bg:#fbfaff; --surface:#ffffff; --soft:#f1eff8; --ink:#1d1a2e; --muted:#5b5870; --line:#e1deec;
+  --mc-azul:#1858d9; --mc-rosa:#d96ab2; --mc-amarelo:#d9b70d; --mc-verde:#03a62c; --mc-laranja:#f2442b;
+  --accent:#4d3b8c; --accent-soft:#ebe7f6; --accent-ink:#ffffff; --focus:#4d3b8c;
   --sim:#1d7656; --nao:#c03e2a; --abs:#a8700f; --aus:#b8c0c8; --pres:#5a6a8b;
   --ok-bg:#e0f0e8; --ok-ink:#145a41; --bad-bg:#f7e2de; --bad-ink:#8c2a1b; --neu-bg:#e9edf0; --neu-ink:#46535f; --warn-bg:#f5ebd6; --warn-ink:#6f4a0f;
-  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
-  --r:14px;
+  --display:"Montserrat","Segoe UI",system-ui,sans-serif;
+  --body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:20px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -24,16 +28,16 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme: dark;
-    --bg:#0f1720; --surface:#162230; --soft:#1c2a39; --ink:#e6edf4; --muted:#a2b0bf; --line:#2a394a;
-    --accent:#8cc0e6; --accent-soft:#1d3347; --accent-ink:#0f1720; --focus:#a8d6fa;
+    --bg:#14111f; --surface:#1e1a2e; --soft:#272238; --ink:#ece9f7; --muted:#b0abc6; --line:#342e4a;
+    --accent:#b9a9f5; --accent-soft:#2c2548; --accent-ink:#14111f; --focus:#cfc3ff;
     --sim:#43b98e; --nao:#f07360; --abs:#e2ac44; --aus:#425062; --pres:#93a3c3;
     --ok-bg:#173c2f; --ok-ink:#95e3c3; --bad-bg:#45221c; --bad-ink:#ffb8aa; --neu-bg:#243344; --neu-ink:#bcc8d4; --warn-bg:#3e3119; --warn-ink:#f3d18b;
   }
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --bg:#0f1720; --surface:#162230; --soft:#1c2a39; --ink:#e6edf4; --muted:#a2b0bf; --line:#2a394a;
-  --accent:#8cc0e6; --accent-soft:#1d3347; --accent-ink:#0f1720; --focus:#a8d6fa;
+  --bg:#14111f; --surface:#1e1a2e; --soft:#272238; --ink:#ece9f7; --muted:#b0abc6; --line:#342e4a;
+  --accent:#b9a9f5; --accent-soft:#2c2548; --accent-ink:#14111f; --focus:#cfc3ff;
   --sim:#43b98e; --nao:#f07360; --abs:#e2ac44; --aus:#425062; --pres:#93a3c3;
   --ok-bg:#173c2f; --ok-ink:#95e3c3; --bad-bg:#45221c; --bad-ink:#ffb8aa; --neu-bg:#243344; --neu-ink:#bcc8d4; --warn-bg:#3e3119; --warn-ink:#f3d18b;
 }
@@ -53,17 +57,18 @@ img{max-width:100%}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* topo */
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-top:6px;background:linear-gradient(90deg,var(--mc-azul) 0 25%,var(--mc-rosa) 25% 50%,var(--mc-amarelo) 50% 75%,var(--mc-verde) 75% 100%) top/100% 6px no-repeat,var(--surface);border-bottom:1px solid var(--line)}
 .bar1{display:flex;align-items:center;gap:1rem;min-height:3.75rem}
 .brand{white-space:nowrap;font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.6rem;margin-right:auto}
 .brand .mark{display:grid;grid-template-columns:repeat(3,.45rem);gap:2px}
-.brand .mark i{width:.45rem;height:.45rem;border-radius:2px;background:var(--sim)}
-.brand .mark i:nth-child(5){background:var(--nao)}
-.brand .mark i:nth-child(8){background:var(--aus)}
+.brand .logo{width:2.75rem;height:2.75rem;border-radius:50%;object-fit:cover;flex:none;border:2px solid var(--line)}
+.brandtxt{display:flex;flex-direction:column;line-height:1.1}
+.brandtxt small{font-family:var(--body);font-weight:400;font-size:.72rem;letter-spacing:0;color:var(--muted);margin-top:.15rem;white-space:normal}
+@media (max-width:360px){.brandtxt small{display:none}}
 .tools{display:flex;gap:.4rem}
 .tool{min-width:2.75rem;height:2.75rem;padding:0 .7rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:.35rem}
 .tool svg{width:1.15rem;height:1.15rem}
-@media (max-width:480px){.brand{font-size:19px;gap:8px}.brand .mark{grid-template-columns:repeat(3,7px)}.brand .mark i{width:7px;height:7px}.tool{width:44px;min-width:44px;height:44px;padding:0;font-size:16px}.tool svg{width:18px;height:18px}nav.tabs a{font-size:16px}}
+@media (max-width:480px){.brand{font-size:19px;gap:8px}.brand .logo{width:38px;height:38px}.tool{width:44px;min-width:44px;height:44px;padding:0;font-size:16px}.tool svg{width:18px;height:18px}nav.tabs a{font-size:16px}}
 nav.tabs{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:thin;margin:0 -.25rem;padding:0 .25rem .5rem}
 nav.tabs a{padding:.5rem .85rem;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:700;white-space:nowrap;min-height:2.75rem;display:inline-flex;align-items:center}
 nav.tabs a:hover{color:var(--ink);background:var(--soft)}
@@ -92,6 +97,10 @@ h3{font-size:1.15rem;font-weight:600}
 .path .ico svg{width:1.4rem;height:1.4rem}
 .path strong{font-family:var(--display);font-size:1.45rem;font-weight:800;letter-spacing:-.01em}
 .path span{color:var(--muted)}
+.path:nth-child(4n+1) .ico{background:var(--mc-azul);color:#fff}
+.path:nth-child(4n+2) .ico{background:var(--mc-rosa);color:#1d1a2e}
+.path:nth-child(4n+3) .ico{background:var(--mc-amarelo);color:#1d1a2e}
+.path:nth-child(4n+4) .ico{background:var(--mc-verde);color:#fff}
 @media (max-width:560px){.paths{gap:.6rem;margin-top:1.6rem}.path{display:grid;grid-template-columns:auto 1fr;column-gap:1rem;row-gap:.1rem;min-height:0;padding:1rem 1.1rem}.path .ico{grid-row:1 / span 2;margin:0;align-self:center}.path strong{font-size:1.25rem}.path span:not(.ico){font-size:.95rem}}
 .cal abbr{text-decoration:none}
 .faces{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.25rem,1fr));gap:.4rem}
@@ -100,7 +109,7 @@ h3{font-size:1.15rem;font-weight:600}
 .face .nm{font-weight:700;font-size:.95rem;line-height:1.25}
 .face .pt{font-size:.82rem;color:var(--muted);margin-top:-.3rem}
 .latest{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.3rem 1.4rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.9rem;padding:.6rem 1.15rem;border-radius:10px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;border:0;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.9rem;padding:.6rem 1.25rem;border-radius:999px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;border:0;cursor:pointer}
 .btn.ghost{background:var(--surface);color:var(--accent);border:1px solid var(--line)}
 
 /* avatar */
@@ -324,7 +333,7 @@ details.cat.reu > summary{display:grid;grid-template-columns:auto 1fr auto;gap:.
 <header class="top">
   <div class="wrap">
     <div class="bar1">
-      <a class="brand" href="#inicio"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Plenário Aberto</a>
+      <a class="brand" href="#inicio"><img class="logo" src="logo.png" alt="" width="44" height="44"><span class="brandtxt">Xereta<small>de olho nos vereadores de Campinas</small></span></a>
       <div class="tools">
         <button class="tool" id="btnTexto" type="button" aria-label="Aumentar o tamanho do texto">A<span aria-hidden="true" style="font-size:.8em">+</span></button>
         <button class="tool" id="btnTema" type="button" aria-label="Alternar tema claro ou escuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
@@ -864,7 +873,7 @@ function rota(){
   else if (/^s-\d+$/.test(h)) { tab = 'votacoes'; viewSessao(+h.slice(2)); const s = Sid[+h.slice(2)]; titulo = s ? 'Sessão de ' + fmtData(s.d) : 'Sessão'; }
   else if (/^c-\d+$/.test(h)) { tab = 'comissoes'; viewComissao(+h.slice(2)); titulo = (D.COM[+h.slice(2)]||[])[1] || 'Comissão'; }
   else { const k = VIEWS[h] ? h : 'inicio'; VIEWS[k][0](); titulo = VIEWS[k][1]; tab = VIEWS[k][2]; }
-  document.title = titulo + ' – Plenário Aberto';
+  document.title = titulo + ' – Xereta';
   document.querySelectorAll('nav.tabs a').forEach(a => { if (a.dataset.view === tab) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
 }
 window.addEventListener('hashchange', () => { rota(); window.scrollTo(0,0); app.focus({preventScroll:true}); });
