@@ -7,7 +7,7 @@ Uso:
   python coletar.py --leg 18        coleta uma legislatura anterior e gera leg-18.html
   python coletar.py --bruto x.json  gera index.html a partir de uma coleta salva
 """
-import base64, collections, io, json, sys, time
+import base64, collections, csv, io, json, os, re, sys, time, unicodedata
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone, timedelta
 
@@ -16,6 +16,8 @@ import requests
 API = 'https://sapl.campinas.sp.leg.br/api'
 FUSO = timezone(timedelta(hours=-3))
 HOJE = datetime.now(FUSO).strftime('%Y-%m-%d')
+# Planilha de emendas parlamentares (primeira aba, em CSV). Precisa estar com acesso "qualquer pessoa com o link".
+EMENDAS_URL = os.environ.get('EMENDAS_URL') or 'https://docs.google.com/spreadsheets/d/1hNq-clox6dtxRbFNdPzJqhWmrXWG_yM_adFk2uj0DQQ/export?format=csv&gid=0'
 sessao = requests.Session()
 sessao.headers['User-Agent'] = 'Xereta (acompanhamento cidadao da Camara de Campinas)'
 
@@ -177,6 +179,90 @@ def coletar(leg_num=None):
     return R
 
 
+# ---------------------------------------------------------------- emendas parlamentares
+def parse_brl(s):
+    """Lê valores como 'R$ 80,000,00', 'R$ 1.350,00', '1350' ou '89279.87'."""
+    s = re.sub(r'[^\d,.\-]', '', str(s or ''))
+    if not s or not re.search(r'\d', s):
+        return 0.0
+    m = re.search(r'[.,](\d{2})$', s)
+    if m:
+        return float(re.sub(r'[.,\-]', '', s[:-3]) + '.' + m.group(1))
+    if re.fullmatch(r'\d+(\.\d)?', s):
+        return float(s)
+    return float(re.sub(r'[.,\-]', '', s))
+
+
+def parse_data(s):
+    s = (s or '').strip()[:10]
+    m = re.fullmatch(r'(\d{2})/(\d{2})/(\d{4})', s)
+    if m:
+        return f'{m.group(3)}-{m.group(2)}-{m.group(1)}'
+    return s if re.fullmatch(r'\d{4}-\d{2}-\d{2}', s) else None
+
+
+def chave_nome(s):
+    s = unicodedata.normalize('NFD', s or '').encode('ascii', 'ignore').decode().lower()
+    return re.sub(r'\s+', ' ', s.replace(' da ', ' ')).strip()
+
+
+def emendas_de_csv(texto, hoje=None):
+    """Transforma o CSV da planilha em {total, v:[{n, pago, forn, r:[[data, fornecedor, pago, secretaria]]}]}.
+    Só entram pagamentos já feitos (VL_PAGO > 0). O CPF que vem colado ao nome de pessoa física é removido."""
+    leitor = csv.DictReader(io.StringIO(texto))
+    if not leitor.fieldnames or 'PARLAMENTAR' not in leitor.fieldnames or 'VL_PAGO' not in leitor.fieldnames:
+        raise ValueError('A planilha não tem as colunas esperadas (PARLAMENTAR, VL_PAGO).')
+    por = {}
+    for lin in leitor:
+        nome = re.sub(r'\s+', ' ', (lin.get('PARLAMENTAR') or '')).strip()
+        if not nome:
+            continue
+        pago = parse_brl(lin.get('VL_PAGO'))
+        d = parse_data(lin.get('DT_CADASTRO'))
+        if pago <= 0 or not d:
+            continue
+        forn = re.sub(r'\s+', ' ', (lin.get('NOME_FORNECEDOR') or '')).strip()
+        forn = re.sub(r'\s\d{11}$', '', forn) or 'Fornecedor não informado'
+        sec = re.sub(r'\s+', ' ', (lin.get('NOME_GESTORA') or '')).strip()
+        por.setdefault(nome, []).append([d, forn, round(pago, 2), sec])
+    v = []
+    for nome, rs in sorted(por.items()):
+        rs.sort(key=lambda r: (r[0], r[2]), reverse=True)
+        v.append(dict(n=nome, pago=round(sum(r[2] for r in rs), 2), forn=len({r[1] for r in rs}), r=rs))
+    return dict(atualizado=hoje or HOJE, total=round(sum(x['pago'] for x in v), 2), v=v)
+
+
+def emendas_anteriores():
+    """Se a planilha falhar, reaproveita as emendas do index.html publicado, para a aba não sumir do site."""
+    try:
+        html = open('index.html', encoding='utf-8').read()
+        m = re.search(r'<script type="application/json" id="data">(.*?)</script>', html, re.S)
+        return json.loads(m.group(1).replace('<\\/', '</')).get('EME') if m else None
+    except Exception:
+        return None
+
+
+def coletar_emendas():
+    log('Baixando a planilha de emendas...')
+    try:
+        r = sessao.get(EMENDAS_URL, timeout=120)
+        r.raise_for_status()
+        texto = r.content.decode('utf-8-sig')
+        if texto.lstrip().startswith('<'):
+            raise ValueError('O Google devolveu uma página em vez do CSV (a planilha está com acesso restrito?).')
+        eme = emendas_de_csv(texto)
+        if sum(len(x['r']) for x in eme['v']) < 500:
+            raise ValueError('Poucas linhas na planilha de emendas; ignorando.')
+        log(f"Emendas: {len(eme['v'])} parlamentares, {sum(len(x['r']) for x in eme['v'])} pagamentos, R$ {eme['total']:,.2f}")
+        return eme
+    except Exception as e:
+        log(f'Aviso: não foi possível atualizar as emendas ({e}).')
+        ant = emendas_anteriores()
+        if ant:
+            log('Mantendo as emendas da última publicação.')
+        return ant
+
+
 def normaliza(s):
     s = (s or '').strip()
     if s == 'Sim': return 'S'
@@ -316,6 +402,12 @@ def montar(R, saida='index.html'):
         REL=[[r['m'], r['p'], r['c'], r['ini'], r['fim'], None, r['tfim']] for r in R['relatorias'] if r['ini']],
         TFIM={str(k): v for k, v in R['tipos_fim'].items()},
     )
+    if atual and R.get('emendas'):
+        dados['EME'] = R['emendas']
+        nomes = {chave_nome(v['nome']) for v in V}
+        sem = sorted(x['n'] for x in R['emendas']['v'] if chave_nome(x['n']) not in nomes)
+        if sem:
+            log('Emendas de parlamentares sem página nesta legislatura (ou com nome diferente do SAPL): ' + ', '.join(sem))
     js = json.dumps(dados, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     html = open('modelo.html', encoding='utf-8').read().replace('__DATA__', js)
     open(saida, 'w', encoding='utf-8').write(html)
@@ -330,6 +422,8 @@ if __name__ == '__main__':
         R = json.load(open(sys.argv[sys.argv.index('--bruto') + 1], encoding='utf-8'))
     else:
         R = coletar(leg_num)
+        if not leg_num:
+            R['emendas'] = coletar_emendas()
         json.dump(R, open('coleta.json', 'w', encoding='utf-8'), ensure_ascii=False)
     saida = f"leg-{R['legislatura']['numero']}.html" if leg_num else 'index.html'
     d = montar(R, saida)
