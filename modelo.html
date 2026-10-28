@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,700;1,400&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,700;1,400&family=Jersey+15&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme: light;
@@ -18,7 +18,7 @@
   --accent:#7a4eb6; --accent-soft:#efe8f8; --accent-ink:#ffffff; --focus:#7a4eb6;
   --sim:#c5fc1d; --nao:#f32b0a; --abs:#f9992a; --aus:#d4c8bb; --pres:#8c7b6e;
   --ok-bg:#eafcb5; --ok-ink:#3f5400; --bad-bg:#fde1db; --bad-ink:#9d1a05; --neu-bg:#efe7de; --neu-ink:#5d4f45; --warn-bg:#fde9c8; --warn-ink:#6b3d00;
-  --display:"Pixelify Sans","Segoe UI",system-ui,sans-serif;
+  --display:"Jersey 15","Segoe UI",system-ui,sans-serif;
   --body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
   --r:20px;
   box-sizing:border-box;
@@ -398,9 +398,9 @@ h1,h2,h3{letter-spacing:0;font-weight:700}
 :focus-visible{border-radius:0}
 header.top{border-bottom:3px solid var(--bd)}
 footer{border-top:3px solid var(--bd)}
-.brand{font-size:1.55rem;letter-spacing:0}
+.brand{font-size:1.4rem;letter-spacing:0}
 .brand .logo{width:2.9rem;height:2.9rem;padding:2px;object-fit:contain;image-rendering:pixelated;border-radius:0;border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);background:#fff7e8}
-@media (max-width:480px){.brand{font-size:21px}.brand .logo{width:40px;height:40px}}
+@media (max-width:480px){.brand{font-size:19px}.brand .logo{width:40px;height:40px}}
 .histbar{border-bottom:2px solid var(--bd)}
 /* caixas com sombra dura */
 .path,.latest,.cal,.sitem,.vote,details.cat,.plist,.stat,.tablewrap,.com,.gchart,.callout{border:2px solid var(--bd);border-radius:0;box-shadow:4px 4px 0 var(--sh)}
@@ -442,6 +442,8 @@ select,input[type=search],input[type=date]{border:2px solid var(--bd);border-rad
 .gb{border:2px solid var(--bd);border-radius:0}
 .gcol{border-radius:0}
 .gcol.sel{outline:2px solid var(--bd)}
+/* fonte de jogo (Jersey 15): só tem peso normal e é mais baixa que a anterior, então ajusto o tamanho pela altura das letras */
+h1,h2,h3,.brand,.path strong,.av,.sitem .dt,.fact b,.big,.reu .rdate,.eme-big{font-weight:400;font-synthesis:none;font-size-adjust:0.5;letter-spacing:0}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
